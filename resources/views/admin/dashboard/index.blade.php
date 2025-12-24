@@ -1,0 +1,324 @@
+@extends('layouts.admin')
+@section('content')
+        <main class="flex-1 flex flex-col h-full overflow-y-auto overflow-x-hidden relative">
+            <div class="flex-1 p-4 md:p-8 lg:p-12 max-w-[1400px] mx-auto w-full">
+                <!-- Page Heading -->
+                <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-black tracking-tight text-[#171511] dark:text-white">Sales Tracker</h2>
+                        <p class="text-gray-500 dark:text-gray-400 mt-1">Monitor revenue, subscriptions, and financial health.</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <button class="flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-white dark:bg-surface-dark border border-gray-200 dark:border-neutral-700 text-sm font-bold hover:bg-gray-50 dark:hover:bg-neutral-800 transition-colors">
+                            <span class="material-symbols-outlined text-[20px]">calendar_today</span>
+                            <span>Last 30 Days</span>
+                        </button>
+                        <button class="flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-secondary text-white shadow-sm hover:bg-opacity-90 transition-colors text-sm font-bold">
+                            <span class="material-symbols-outlined text-[20px]">download</span>
+                            <span>Export Report</span>
+                        </button>
+                    </div>
+                </header>
+                <!-- Filters / Chips -->
+                <div class="flex flex-wrap gap-3 mb-8">
+                    <button class="flex items-center gap-2 h-9 px-4 rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-neutral-700 hover:border-secondary transition-colors group">
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200 group-hover:text-secondary">Status: All</span>
+                        <span class="material-symbols-outlined text-gray-400 text-[18px]">expand_more</span>
+                    </button>
+                    <button class="flex items-center gap-2 h-9 px-4 rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-neutral-700 hover:border-secondary transition-colors group">
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200 group-hover:text-secondary">Product: All</span>
+                        <span class="material-symbols-outlined text-gray-400 text-[18px]">expand_more</span>
+                    </button>
+                    <button class="flex items-center gap-2 h-9 px-4 rounded-full bg-secondary/10 border border-secondary/20 text-secondary hover:bg-secondary/20 transition-colors">
+                        <span class="text-sm font-bold">Category: Wellness</span>
+                        <span class="material-symbols-outlined text-[18px]">close</span>
+                    </button>
+                </div>
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    <!-- Card 1 -->
+                    <div class="p-5 rounded-xl bg-white dark:bg-surface-dark shadow-[0_2px_8px_rgba(0,0,0,0.04)] dark:shadow-none border border-transparent dark:border-neutral-700 flex flex-col gap-3">
+                        <div class="flex justify-between items-start">
+                            <p class="text-gray-500 dark:text-gray-400 text-sm font-medium">Total Revenue</p>
+                            <div class="p-1.5 rounded-full bg-secondary/10 text-secondary">
+                                <span class="material-symbols-outlined text-[20px] filled">payments</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold tracking-tight text-[#171511] dark:text-white">$124,500</p>
+                            <div class="flex items-center gap-1 mt-1 text-tertiary">
+                                <span class="material-symbols-outlined text-[16px]">trending_up</span>
+                                <span class="text-xs font-bold">+12% from last month</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="p-5 rounded-xl bg-white dark:bg-surface-dark shadow-[0_2px_8px_rgba(0,0,0,0.04)] dark:shadow-none border border-transparent dark:border-neutral-700 flex flex-col gap-3">
+                        <div class="flex justify-between items-start">
+                            <p class="text-gray-500 dark:text-gray-400 text-sm font-medium">Active Subscriptions</p>
+                            <div class="p-1.5 rounded-full bg-tertiary/10 text-tertiary">
+                                <span class="material-symbols-outlined text-[20px]">loyalty</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold tracking-tight text-[#171511] dark:text-white">1,240</p>
+                            <div class="flex items-center gap-1 mt-1 text-tertiary">
+                                <span class="material-symbols-outlined text-[16px]">trending_up</span>
+                                <span class="text-xs font-bold">+5% new members</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="p-5 rounded-xl bg-white dark:bg-surface-dark shadow-[0_2px_8px_rgba(0,0,0,0.04)] dark:shadow-none border border-transparent dark:border-neutral-700 flex flex-col gap-3">
+                        <div class="flex justify-between items-start">
+                            <p class="text-gray-500 dark:text-gray-400 text-sm font-medium">Course Sales</p>
+                            <div class="p-1.5 rounded-full bg-primary/50 text-orange-800">
+                                <span class="material-symbols-outlined text-[20px]">local_library</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold tracking-tight text-[#171511] dark:text-white">85</p>
+                            <div class="flex items-center gap-1 mt-1 text-tertiary">
+                                <span class="material-symbols-outlined text-[16px]">trending_up</span>
+                                <span class="text-xs font-bold">+8% increase</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="p-5 rounded-xl bg-white dark:bg-surface-dark shadow-[0_2px_8px_rgba(0,0,0,0.04)] dark:shadow-none border border-transparent dark:border-neutral-700 flex flex-col gap-3">
+                        <div class="flex justify-between items-start">
+                            <p class="text-gray-500 dark:text-gray-400 text-sm font-medium">Avg Order Value</p>
+                            <div class="p-1.5 rounded-full bg-gray-100 dark:bg-neutral-700 text-gray-600 dark:text-gray-300">
+                                <span class="material-symbols-outlined text-[20px]">receipt_long</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold tracking-tight text-[#171511] dark:text-white">$45.00</p>
+                            <div class="flex items-center gap-1 mt-1 text-gray-500">
+                                <span class="material-symbols-outlined text-[16px]">remove</span>
+                                <span class="text-xs font-bold">No change</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Charts Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Main Line Chart -->
+                    <div class="lg:col-span-2 rounded-xl bg-white dark:bg-surface-dark shadow-sm border border-transparent dark:border-neutral-700 p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <div>
+                                <h3 class="text-lg font-bold text-[#171511] dark:text-white">Revenue Growth</h3>
+                                <p class="text-sm text-gray-500">Income over the last 30 days</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-secondary"></span>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-300">Courses</span>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-tertiary"></span>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-300">Subs</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative w-full aspect-[2/1] min-h-[250px]">
+                            <!-- SVG Chart -->
+                            <svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 400 150">
+                                <!-- Grid Lines -->
+                                <line stroke="#f0f0f0" stroke-width="1" x1="0" x2="400" y1="150" y2="150"></line>
+                                <line stroke="#f0f0f0" stroke-dasharray="4" stroke-width="1" x1="0" x2="400" y1="100" y2="100"></line>
+                                <line stroke="#f0f0f0" stroke-dasharray="4" stroke-width="1" x1="0" x2="400" y1="50" y2="50"></line>
+                                <line stroke="#f0f0f0" stroke-dasharray="4" stroke-width="1" x1="0" x2="400" y1="0" y2="0"></line>
+                                <!-- Area Fill (Gradient) -->
+                                <defs>
+                                    <lineargradient id="gradientSecondary" x1="0" x2="0" y1="0" y2="1">
+                                        <stop offset="0%" stop-color="#DA70D6" stop-opacity="0.15"></stop>
+                                        <stop offset="100%" stop-color="#DA70D6" stop-opacity="0"></stop>
+                                    </lineargradient>
+                                </defs>
+                                <!-- Line 1: Secondary Color (#DA70D6) -->
+                                <path d="M0 120 C 50 120, 50 60, 100 60 S 150 90, 200 80 S 250 40, 300 50 S 350 20, 400 30" fill="none" stroke="#DA70D6" stroke-linecap="round" stroke-width="3" vector-effect="non-scaling-stroke"></path>
+                                <!-- Line 2: Tertiary Color (#40B5AD) -->
+                                <path d="M0 140 C 50 130, 80 110, 120 115 S 180 130, 220 100 S 280 90, 320 85 S 380 60, 400 70" fill="none" stroke="#40B5AD" stroke-dasharray="6 4" stroke-linecap="round" stroke-width="3" vector-effect="non-scaling-stroke"></path>
+                            </svg>
+                        </div>
+                        <div class="flex justify-between mt-4 text-xs font-bold text-gray-400 uppercase tracking-wide">
+                            <span>Week 1</span>
+                            <span>Week 2</span>
+                            <span>Week 3</span>
+                            <span>Week 4</span>
+                        </div>
+                    </div>
+                    <!-- Donut/Bar Chart Sidebar -->
+                    <div class="rounded-xl bg-white dark:bg-surface-dark shadow-sm border border-transparent dark:border-neutral-700 p-6 flex flex-col">
+                        <div class="mb-6">
+                            <h3 class="text-lg font-bold text-[#171511] dark:text-white">Revenue by Category</h3>
+                            <p class="text-sm text-gray-500">Breakdown of earnings</p>
+                        </div>
+                        <div class="flex-1 flex flex-col justify-center gap-6">
+                            <!-- Item 1 -->
+                            <div class="flex flex-col gap-2">
+                                <div class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-200">
+                                    <span>Yoga Classes</span>
+                                    <span>$22,400</span>
+                                </div>
+                                <div class="w-full h-3 bg-gray-100 dark:bg-neutral-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-secondary rounded-full" style="width: 55%"></div>
+                                </div>
+                            </div>
+                            <!-- Item 2 -->
+                            <div class="flex flex-col gap-2">
+                                <div class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-200">
+                                    <span>Meditation Apps</span>
+                                    <span>$14,200</span>
+                                </div>
+                                <div class="w-full h-3 bg-gray-100 dark:bg-neutral-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-tertiary rounded-full" style="width: 30%"></div>
+                                </div>
+                            </div>
+                            <!-- Item 3 -->
+                            <div class="flex flex-col gap-2">
+                                <div class="flex justify-between text-sm font-bold text-gray-700 dark:text-gray-200">
+                                    <span>Nutritional Plans</span>
+                                    <span>$8,600</span>
+                                </div>
+                                <div class="w-full h-3 bg-gray-100 dark:bg-neutral-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-primary rounded-full" style="width: 15%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Recent Transactions Table -->
+                <div class="rounded-xl bg-white dark:bg-surface-dark shadow-sm border border-transparent dark:border-neutral-700 overflow-hidden">
+                    <div class="flex items-center justify-between p-6 border-b border-gray-100 dark:border-neutral-700">
+                        <h3 class="text-lg font-bold text-[#171511] dark:text-white">Recent Transactions</h3>
+                        <button class="text-secondary text-sm font-bold hover:underline">View All</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-background-light dark:bg-neutral-800 text-xs uppercase text-gray-500 font-bold tracking-wider">
+                                    <th class="px-6 py-4">Order ID</th>
+                                    <th class="px-6 py-4">Customer</th>
+                                    <th class="px-6 py-4">Product</th>
+                                    <th class="px-6 py-4">Date</th>
+                                    <th class="px-6 py-4">Amount</th>
+                                    <th class="px-6 py-4">Status</th>
+                                    <th class="px-6 py-4 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 dark:divide-neutral-700 text-sm">
+                                <!-- Row 1 -->
+                                <tr class="hover:bg-primary/10 dark:hover:bg-neutral-700/50 transition-colors group">
+                                    <td class="px-6 py-4 font-mono text-gray-500">#ORD-001</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-gray-200 bg-cover bg-center" data-alt="Profile picture of Sarah M." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC4A6F_6WZQSTZjQZnNv8wwX0HF0FUVj5YudEflXNOLYY8VKSoq4d3miWXK-q18gFav4nVozpmG0Brg-nXcPfNpaG1kH3elk1s9XovMbP5x5lMzBa1YTNwy7oO87kyPBL-pQDQteDiAc-Cl7eGKl50_x8sqYsFjK4qME1eRIcHW-eRE6qSVzNiEHQWQ1ZlaGbskjrYCtEup9-te4yY2RKuNyplgxJiocXCMLaxEMPbxhwrGK3vPIcLXC_BzjT5XXZgD_5wHkiFp9K0");'></div>
+                                            <span class="font-bold text-[#171511] dark:text-gray-200">Sarah M.</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-300">Advanced Yoga Flow</td>
+                                    <td class="px-6 py-4 text-gray-500">Oct 24, 2023</td>
+                                    <td class="px-6 py-4 font-bold text-[#171511] dark:text-white">$120.00</td>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-tertiary/10 text-tertiary">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <button class="text-gray-400 hover:text-secondary transition-colors">
+                                            <span class="material-symbols-outlined text-[20px]">more_vert</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Row 2 -->
+                                <tr class="hover:bg-primary/10 dark:hover:bg-neutral-700/50 transition-colors group">
+                                    <td class="px-6 py-4 font-mono text-gray-500">#ORD-002</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-gray-200 bg-cover bg-center" data-alt="Profile picture of James L." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB0hcQkGBw5fduqblIo5iuqSx2R2YYgY-HkZ5V_45bqOtxVLaZPXurRpONExk3G45j64O95YB0z_J2XYhUwUZJfyNu51Yk7r9o8Uxhe1dsz1O4npWbTjTD_8dUcTwKoKC4Fs2dFM7rliCYcLFhpiV-9xnP1BIVdh9mUNpNzLxmqFCx6XHowte74gbhb50NPmeUrWLQnWhwIeREN6xrj2i8ve9F-KF7loZrxQ8GDVcqm2PD22lhJGKOIdE_g7nvRixJ3AKOhvxM1vow");'></div>
+                                            <span class="font-bold text-[#171511] dark:text-gray-200">James L.</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-300">Mindfulness Basics</td>
+                                    <td class="px-6 py-4 text-gray-500">Oct 23, 2023</td>
+                                    <td class="px-6 py-4 font-bold text-[#171511] dark:text-white">$45.00</td>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-yellow-100 text-yellow-700">
+                                            Pending
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <button class="text-gray-400 hover:text-secondary transition-colors">
+                                            <span class="material-symbols-outlined text-[20px]">more_vert</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Row 3 -->
+                                <tr class="hover:bg-primary/10 dark:hover:bg-neutral-700/50 transition-colors group">
+                                    <td class="px-6 py-4 font-mono text-gray-500">#ORD-003</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-gray-200 bg-cover bg-center" data-alt="Profile picture of Emily R." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAXL3LoraRNegHaLc6sVYzl2g0-afJSMrwLR0UTgeT0zBpLKtmDDK_-3mcpeSqZaNa3hUj-HwriH4nPCUFx3o83CEFxFl44iYSJ7MTjla9fN8lBfwTxwZS-gX58jliX2sqrVighGXg3dbdwkdbvwB98CGcNqqFMCl3TAUufjQPN6zU_VjVrUMJ-0rzSZXXJlYovcEZjCG2JsdsprB9VhtzK7aamcImidBxjLQ0pH8Ot6mzs3pX_pRywSceXG0WcceebOanqjxN38Hs");'></div>
+                                            <span class="font-bold text-[#171511] dark:text-gray-200">Emily R.</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-300">Vegan Meal Plan</td>
+                                    <td class="px-6 py-4 text-gray-500">Oct 23, 2023</td>
+                                    <td class="px-6 py-4 font-bold text-[#171511] dark:text-white">$29.99</td>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-tertiary/10 text-tertiary">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <button class="text-gray-400 hover:text-secondary transition-colors">
+                                            <span class="material-symbols-outlined text-[20px]">more_vert</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Row 4 -->
+                                <tr class="hover:bg-primary/10 dark:hover:bg-neutral-700/50 transition-colors group">
+                                    <td class="px-6 py-4 font-mono text-gray-500">#ORD-004</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-gray-200 bg-cover bg-center" data-alt="Profile picture of Michael C." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCOW-V6wHuRgg5eWwHK0AAwgJeObabbWTVZfqFztMmCCGLiNyDbWERJAgRRQhObMqqccm4rdOSChRgPWWkWSrMla-3cNOxlfdqBs7YOIFFQQVORhNG99r3rZhK7x794Wh0WQMrJoy1SHgA2NHAxjfTbuW5Vx5iQP7nxrpTCvmmRDuT7s6kfhwdwHaqdA9_0nsJoza0VGreEAaeD2HCdlP2MLzwDF7NBKuWUCHRoxlqd-RS_9VLxB698ND28oHeh1Si5e5NiMXQ4ZzM");'></div>
+                                            <span class="font-bold text-[#171511] dark:text-gray-200">Michael C.</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-300">Annual Membership</td>
+                                    <td class="px-6 py-4 text-gray-500">Oct 22, 2023</td>
+                                    <td class="px-6 py-4 font-bold text-[#171511] dark:text-white">$199.00</td>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700">
+                                            Refunded
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <button class="text-gray-400 hover:text-secondary transition-colors">
+                                            <span class="material-symbols-outlined text-[20px]">more_vert</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Pagination -->
+                    <div class="flex items-center justify-between px-6 py-4 border-t border-gray-100 dark:border-neutral-700 bg-gray-50 dark:bg-neutral-800/30">
+                        <p class="text-xs text-gray-500">Showing 1-4 of 240</p>
+                        <div class="flex gap-2">
+                            <button class="p-1 rounded hover:bg-white dark:hover:bg-neutral-700 text-gray-500 disabled:opacity-50">
+                                <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+                            </button>
+                            <button class="p-1 rounded hover:bg-white dark:hover:bg-neutral-700 text-gray-500">
+                                <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+@endsection
+@section('scripts')
+@endsection
