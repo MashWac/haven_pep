@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\courseController;
 use App\Http\Controllers\admin\dashboardController;
 use App\Http\Controllers\admin\myProfileController;
 use App\Http\Controllers\admin\salesController;
+use App\Http\Controllers\admin\SystemSettingsController;
 use App\Http\Controllers\admin\usersController;
 use App\Http\Controllers\auth\AuthenticationController;
 use App\Http\Controllers\client\booksController;
@@ -44,6 +45,11 @@ Route::get('/password_reset_form/{token}', [AuthenticationController::class, 'pa
 
 
 Route::get('/my_profile', [userController::class, 'myProfile']);
+Route::get('/orders/receipt/{id}', [userController::class, 'downloadReceipt']);
+Route::get('/courses/continue/{id}',[userController::class, 'progressWithCourse']);
+Route::post('/course/update_progress',[userController::class,'']);
+Route::get('/course/get_video_url/{course_id}/{lesson_number}',[userController::class,'fetchVideoUrl']);
+Route::get('/course/get_pptx_url/{course_id}/{lesson_number}',[userController::class,'fetchPptxUrl']);
 
 
 
@@ -83,6 +89,7 @@ Route::put('/update_book_category/{id}', [AdminBooksController::class, 'updateBo
 Route::delete('/admin_book_categories/delete/{id}', [AdminBooksController::class, 'deleteBookCategory']);
 
 Route::get('/admin_sales', [salesController::class, 'index']);
+Route::get('admin_sales/details/{id}',[salesController::class,'saleDetails']);
 
 
 Route::get('/admin_courses', [courseController::class, 'index']);
@@ -114,5 +121,10 @@ Route::post('/insert_author', [adminAuthorsController::class, 'insertAuthor']);
 Route::get('/admin_authors/edit/{id}', [adminAuthorsController::class, 'editAuthor']);
 Route::put('/admin_authors/update/{id}', [adminAuthorsController::class, 'updateAuthor']);
 Route::delete('/admin_authors/delete/{id}', [adminAuthorsController::class, 'deleteAuthor']);
+
+
+
+Route::get('admin_settings',[SystemSettingsController::class,'index']);
+Route::put('admin_settings/update',[SystemSettingsController::class,'update']);
 
 });

@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.css" />
-      <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <script id="tailwind-config">
@@ -46,50 +46,60 @@
       <div class="flex flex-col h-full justify-between p-4">
         <div class="flex flex-col gap-4">
           <div class="flex gap-3 items-center mb-6 px-2">
-            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Abstract wellness logo with soft gradients" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBXnDqPDjRc4zgEWm3ooskMsxiAn92iMWMJSiKvfJO0NuMOVo2gRWa4WnMcKQWIF8HfBdK7csA9M0AWSilxOS9R4OKvn1ec_gHDWcs8Be8P1zd8hdV3EUocJBLqnGLZoHyUiBWS0utkHo-EcFzY4iiYLY32K3twT37uCofyhIwgc0zBSI8HbbjiZVzF-WtQzG3DUph3xepHIMolTaYForkmS3e9RKJNQ-K2leC4q3DPhdTg6JHq5KcoMF15o3t7zjhbAm0Fgbr3qNU");'></div>
+            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBXnDqPDjRc4zgEWm3ooskMsxiAn92iMWMJSiKvfJO0NuMOVo2gRWa4WnMcKQWIF8HfBdK7csA9M0AWSilxOS9R4OKvn1ec_gHDWcs8Be8P1zd8hdV3EUocJBLqnGLZoHyUiBWS0utkHo-EcFzY4iiYLY32K3twT37uCofyhIwgc0zBSI8HbbjiZVzF-WtQzG3DUph3xepHIMolTaYForkmS3e9RKJNQ-K2leC4q3DPhdTg6JHq5KcoMF15o3t7zjhbAm0Fgbr3qNU");'></div>
             <div class="flex flex-col">
               <h1 class="text-[#171511] dark:text-white text-base font-bold leading-normal">Admin Panel</h1>
               <p class="text-[#877b64] text-xs font-normal leading-normal">Wellness Platform</p>
             </div>
           </div>
+
           <div class="flex flex-col gap-2">
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light dark:hover:bg-[#2c261a] transition-colors group" href="{{url('/admin_dashboard')}}">
-              <span class="material-symbols-outlined text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white">dashboard</span>
-              <p class="text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white text-sm font-medium leading-normal">Dashboard</p>
-            </a>
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light dark:hover:bg-[#2c261a] transition-colors group" href="{{url('/admin_sales')}}">
-              <span class="material-symbols-outlined text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white">money_bag</span>
-              <p class="text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white text-sm font-medium leading-normal">Sales</p>
-            </a>
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light dark:hover:bg-[#2c261a] transition-colors group" href="{{url('/admin_profile')}}">
-              <span class="material-symbols-outlined text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white">person</span>
-              <p class="text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white text-sm font-medium leading-normal">My Profile</p>
-            </a>
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary" href="{{url('/admin_books')}}">
-              <span class="material-symbols-outlined text-[#171511]">book_2</span>
-              <p class="text-[#171511] text-sm font-medium leading-normal">Books</p>
-            </a>
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary" href="{{url('/admin_courses')}}">
-              <span class="material-symbols-outlined text-[#171511]">book</span>
-              <p class="text-[#171511] text-sm font-medium leading-normal">Courses</p>
-            </a>
-                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary" href="{{url('/admin_authors')}}">
-              <span class="material-symbols-outlined text-[#171511]">article_person</span>
-              <p class="text-[#171511] text-sm font-medium leading-normal">Authors</p>
-            </a>
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light dark:hover:bg-[#2c261a] transition-colors group" href="{{url('/admin_users')}}">
-              <span class="material-symbols-outlined text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white">group</span>
-              <p class="text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white text-sm font-medium leading-normal">Users</p>
+
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors group {{ Request::is('admin_dashboard') ? 'bg-primary' : 'hover:bg-background-light dark:hover:bg-[#2c261a]' }}" href="{{url('/admin_dashboard')}}">
+              <span class="material-symbols-outlined {{ Request::is('admin_dashboard') ? 'text-[#171511]' : 'text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white' }}">dashboard</span>
+              <p class="text-sm font-medium leading-normal {{ Request::is('admin_dashboard') ? 'text-[#171511]' : 'text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white' }}">Dashboard</p>
             </a>
 
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light dark:hover:bg-[#2c261a] transition-colors group" href="{{url('/admin_settings')}}">
-              <span class="material-symbols-outlined text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white">settings</span>
-              <p class="text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white text-sm font-medium leading-normal">Settings</p>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors group {{ Request::is('admin_sales') ? 'bg-primary' : 'hover:bg-background-light dark:hover:bg-[#2c261a]' }}" href="{{url('/admin_sales')}}">
+              <span class="material-symbols-outlined {{ Request::is('admin_sales') ? 'text-[#171511]' : 'text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white' }}">money_bag</span>
+              <p class="text-sm font-medium leading-normal {{ Request::is('admin_sales') ? 'text-[#171511]' : 'text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white' }}">Sales</p>
             </a>
+
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors group {{ Request::is('admin_profile') ? 'bg-primary' : 'hover:bg-background-light dark:hover:bg-[#2c261a]' }}" href="{{url('/admin_profile')}}">
+              <span class="material-symbols-outlined {{ Request::is('admin_profile') ? 'text-[#171511]' : 'text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white' }}">person</span>
+              <p class="text-sm font-medium leading-normal {{ Request::is('admin_profile') ? 'text-[#171511]' : 'text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white' }}">My Profile</p>
+            </a>
+
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors group {{ Request::is('admin_books*') ? 'bg-primary' : 'hover:bg-background-light dark:hover:bg-[#2c261a]' }}" href="{{url('/admin_books')}}">
+              <span class="material-symbols-outlined {{ Request::is('admin_books*') ? 'text-[#171511]' : 'text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white' }}">book_2</span>
+              <p class="text-sm font-medium leading-normal {{ Request::is('admin_books*') ? 'text-[#171511]' : 'text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white' }}">Books</p>
+            </a>
+
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors group {{ Request::is('admin_courses*') ? 'bg-primary' : 'hover:bg-background-light dark:hover:bg-[#2c261a]' }}" href="{{url('/admin_courses')}}">
+              <span class="material-symbols-outlined {{ Request::is('admin_courses*') ? 'text-[#171511]' : 'text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white' }}">book</span>
+              <p class="text-sm font-medium leading-normal {{ Request::is('admin_courses*') ? 'text-[#171511]' : 'text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white' }}">Courses</p>
+            </a>
+
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors group {{ Request::is('admin_authors*') ? 'bg-primary' : 'hover:bg-background-light dark:hover:bg-[#2c261a]' }}" href="{{url('/admin_authors')}}">
+              <span class="material-symbols-outlined {{ Request::is('admin_authors*') ? 'text-[#171511]' : 'text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white' }}">article_person</span>
+              <p class="text-sm font-medium leading-normal {{ Request::is('admin_authors*') ? 'text-[#171511]' : 'text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white' }}">Authors</p>
+            </a>
+
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors group {{ Request::is('admin_users') ? 'bg-primary' : 'hover:bg-background-light dark:hover:bg-[#2c261a]' }}" href="{{url('/admin_users')}}">
+              <span class="material-symbols-outlined {{ Request::is('admin_users') ? 'text-[#171511]' : 'text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white' }}">group</span>
+              <p class="text-sm font-medium leading-normal {{ Request::is('admin_users') ? 'text-[#171511]' : 'text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white' }}">Users</p>
+            </a>
+
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors group {{ Request::is('admin_settings') ? 'bg-primary' : 'hover:bg-background-light dark:hover:bg-[#2c261a]' }}" href="{{url('/admin_settings')}}">
+              <span class="material-symbols-outlined {{ Request::is('admin_settings') ? 'text-[#171511]' : 'text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white' }}">settings</span>
+              <p class="text-sm font-medium leading-normal {{ Request::is('admin_settings') ? 'text-[#171511]' : 'text-[#877b64] group-hover:text-[#171511] dark:group-hover:text-white' }}">Settings</p>
+            </a>
+
           </div>
         </div>
+
         <div class="flex items-center gap-3 px-3 py-2 mt-auto cursor-pointer hover:bg-background-light dark:hover:bg-[#2c261a] rounded-lg">
-          <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" data-alt="Admin user profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuApNg4zpd2tBtCUjN-D4mH7Vy6jzxQxFuesrUt0V5k6hQWDJw3ccoiRd3aTGepJdwFM6qlsiWzmr5iXnzRv12aetWafrn44mGGWetdp2RM9wNHNjWN5dsz4HY6T7fIdzr6V5kNTOKJZHKH0NqsnZJtFFPmsQoBZNZWmUirTyifogfklrHwejfjRi97tNlhRtqA4d3aGCGAO6mJcNVp7vHiEk8mY9q81KEn0LSvu1Vs5q2Zss2m0jix0njh6hqvyajUsVOXscCFvlpg");'></div>
+          <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuApNg4zpd2tBtCUjN-D4mH7Vy6jzxQxFuesrUt0V5k6hQWDJw3ccoiRd3aTGepJdwFM6qlsiWzmr5iXnzRv12aetWafrn44mGGWetdp2RM9wNHNjWN5dsz4HY6T7fIdzr6V5kNTOKJZHKH0NqsnZJtFFPmsQoBZNZWmUirTyifogfklrHwejfjRi97tNlhRtqA4d3aGCGAO6mJcNVp7vHiEk8mY9q81KEn0LSvu1Vs5q2Zss2m0jix0njh6hqvyajUsVOXscCFvlpg");'></div>
           <div class="flex flex-col">
             <p class="text-[#171511] dark:text-white text-sm font-medium">Jane Admin</p>
             <p class="text-[#877b64] text-xs">Sign out</p>

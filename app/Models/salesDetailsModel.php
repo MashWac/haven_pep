@@ -18,4 +18,17 @@ class salesDetailsModel extends Model
         'updated_at',
         'status'
     ];
+    public function book()
+    {
+        return $this->belongsTo(BooksModel::class, 'item_id');
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(coursesModel::class, 'item_id');
+    }
+    public function sale()
+    {
+        return $this->belongsTo(salesModel::class, 'sale_id', 'id');
+    }
 }

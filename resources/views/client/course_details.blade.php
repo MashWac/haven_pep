@@ -82,9 +82,7 @@
                                     <p class="text-white font-bold">{{$instructor->full_name}}</p>
                                     <p class="text-secondary text-sm">{{$instructor->job_title}}</p>
                                 </div>
-                                <a href="{{url('/')}}" class="ml-auto bg-surface-dark hover:bg-white/5 text-white border border-border-dark px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                                    View Profile
-                                </a>
+    
                             </div>
                         </div>
                     </div>

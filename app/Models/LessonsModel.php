@@ -17,4 +17,8 @@ class LessonsModel extends Model
         'updated_at',
         'status'
     ];
+        public function courseMaterials()
+    {
+        return $this->hasMany(courseMaterialsModel::class, 'lesson_number', 'lesson_number');
+    }
 }
