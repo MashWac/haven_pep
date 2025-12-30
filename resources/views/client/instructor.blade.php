@@ -98,7 +98,6 @@
                             </div>
                             <div>
                                 <h4 class="font-bold text-sm">{{$achievement->achievement}}</h4>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Yoga Alliance • 2018</p>
                             </div>
                         </div>
                         @endforeach
@@ -136,7 +135,7 @@
                         <!-- Course Card 1 -->
                         @foreach($courses as $course)
                         <div class="group bg-white dark:bg-surface-dark rounded-xl overflow-hidden border border-neutral-200 dark:border-white/5 hover:border-primary/50 transition-colors">
-                            <div class="aspect-video w-full bg-cover bg-center relative group-hover:scale-105 transition-transform duration-500" data-alt="Woman doing yoga outdoors sunrise" style="background-image: url('{{ asset($course->cover_image) }}');">
+                            <div class="aspect-video w-full bg-cover bg-center relative group-hover:scale-105 transition-transform duration-500" data-alt="{{ $course->course_name}}" style="background-image: url('{{ asset($course->cover_image) }}');">
                                 <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors"></div>
                                 <span class="absolute top-3 left-3 bg-white/10 backdrop-blur-md text-white text-xs font-bold px-2 py-1 rounded">Beginner</span>
                             </div>
