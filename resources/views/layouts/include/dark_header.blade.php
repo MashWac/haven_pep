@@ -59,11 +59,18 @@
                         <p class="text-[10px] uppercase tracking-wider text-[#b5a1b4] font-bold">Account</p>
                         <p class="text-sm font-bold dark:text-white truncate">{{ session('user_name') ?? 'User Name' }}</p>
                     </div>
+                    @if(session('user_type')==1)
 
-                    <a href="{{ url('/my_profile') }}" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-slate-200 hover:bg-primary/10 hover:text-primary transition-colors">
+                    <a href="{{ url('/admin_dashboard') }}" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-slate-200 hover:bg-primary/10 hover:text-primary transition-colors">
                         <span class="material-symbols-outlined text-lg">person</span>
                         My Profile
                     </a>
+                    @else
+                                        <a href="{{ url('/my_profile') }}" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-slate-200 hover:bg-primary/10 hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-lg">person</span>
+                        My Profile
+                    </a>
+                    @endif
 
                     <hr class="my-1 border-slate-100 dark:border-[#362b36]">
 

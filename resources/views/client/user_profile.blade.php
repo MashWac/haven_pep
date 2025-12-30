@@ -30,9 +30,9 @@
                             <p class="text-slate-500 dark:text-text-subtle text-sm mt-1">Member since {{ $user_data->created_at->format('F Y') }}</p>
                         </div>
                     </div>
-                    <button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-red-500/30 text-red-500 hover:bg-red-500/10 transition-colors">
+                    <a href="{{url('logout')}}" class="flex items-center gap-2 px-4 py-2 rounded-lg border border-red-500/30 text-red-500 hover:bg-red-500/10 transition-colors">
                         <span class="material-symbols-outlined text-sm">logout</span> Log Out
-                    </button>
+                    </a>
                 </div>
 
                 <div class="border-b border-slate-200 dark:border-slate-800 mb-8 overflow-x-auto">
@@ -71,65 +71,65 @@
                 </div>
 
                 <div x-show="activeTab === 'activity'" x-cloak class="space-y-10">
-<section class="space-y-12">
-    <div>
-        <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary">auto_stories</span> My Library
-        </h3>
+                    <section class="space-y-12">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">auto_stories</span> My Library
+                            </h3>
 
-        <div class="mb-10">
-            <h4 class="text-sm font-bold uppercase tracking-widest text-[#b5a1b4] mb-4 flex items-center gap-2">
-                <span class="w-8 h-[1px] bg-border-dark"></span> Active Courses
-            </h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                @forelse($myCourses as $item)
-                    <div class="bg-surface-dark border border-border-dark rounded-xl p-4 flex gap-4 hover:border-secondary/50 transition-all group">
-                        <div class="w-24 h-24 bg-cover bg-center rounded-lg shrink-0 shadow-lg" style="background-image: url('{{ $item->course->cover_image ?? asset('default-course.jpg') }}')"></div>
-                        <div class="flex flex-col justify-between py-1">
+                            <div class="mb-10">
+                                <h4 class="text-sm font-bold uppercase tracking-widest text-[#b5a1b4] mb-4 flex items-center gap-2">
+                                    <span class="w-8 h-[1px] bg-border-dark"></span> Active Courses
+                                </h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    @forelse($myCourses as $item)
+                                    <div class="bg-surface-dark border border-border-dark rounded-xl p-4 flex gap-4 hover:border-secondary/50 transition-all group">
+                                        <div class="w-24 h-24 bg-cover bg-center rounded-lg shrink-0 shadow-lg" style="background-image: url('{{ $item->course->cover_image ?? asset('default-course.jpg') }}')"></div>
+                                        <div class="flex flex-col justify-between py-1">
+                                            <div>
+                                                <h5 class="text-white font-bold leading-tight line-clamp-1">{{ $item->course->title ?? 'Course Title' }}</h5>
+                                                <p class="text-xs text-[#b5a1b4] mt-1">Purchased on {{ $item->created_at->format('M d, Y') }}</p>
+                                            </div>
+                                            <a href="{{ url('/courses/continue/'.$item->item_id) }}" class="inline-flex items-center gap-2 text-secondary text-sm font-bold hover:gap-3 transition-all">
+                                                Continue Learning <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    @empty
+                                    <p class="text-[#b5a1b4] text-sm italic">No courses purchased yet.</p>
+                                    @endforelse
+                                </div>
+                            </div>
+
                             <div>
-                                <h5 class="text-white font-bold leading-tight line-clamp-1">{{ $item->course->title ?? 'Course Title' }}</h5>
-                                <p class="text-xs text-[#b5a1b4] mt-1">Purchased on {{ $item->created_at->format('M d, Y') }}</p>
-                            </div>
-                            <a href="{{ url('/courses/continue/'.$item->item_id) }}" class="inline-flex items-center gap-2 text-secondary text-sm font-bold hover:gap-3 transition-all">
-                                Continue Learning <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                            </a>
-                        </div>
-                    </div>
-                @empty
-                    <p class="text-[#b5a1b4] text-sm italic">No courses purchased yet.</p>
-                @endforelse
-            </div>
-        </div>
+                                <h4 class="text-sm font-bold uppercase tracking-widest text-[#b5a1b4] mb-4 flex items-center gap-2">
+                                    <span class="w-8 h-[1px] bg-border-dark"></span> My E-Books
+                                </h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    @forelse($myBooks as $item)
+                                    <div class="bg-surface-dark border border-border-dark rounded-xl p-5 hover:border-primary/50 transition-all group relative overflow-hidden">
+                                        <div class="absolute -right-4 -top-4 w-20 h-20 bg-primary/5 blur-3xl rounded-full"></div>
 
-        <div>
-            <h4 class="text-sm font-bold uppercase tracking-widest text-[#b5a1b4] mb-4 flex items-center gap-2">
-                <span class="w-8 h-[1px] bg-border-dark"></span> My E-Books
-            </h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @forelse($myBooks as $item)
-                    <div class="bg-surface-dark border border-border-dark rounded-xl p-5 hover:border-primary/50 transition-all group relative overflow-hidden">
-                        <div class="absolute -right-4 -top-4 w-20 h-20 bg-primary/5 blur-3xl rounded-full"></div>
-                        
-                        <div class="flex gap-4">
-                            <div class="w-16 h-20 bg-cover bg-center rounded shadow-md group-hover:scale-105 transition-transform" style="background-image: url('{{ $item->book->image ?? asset('default-book.jpg') }}')"></div>
-                            <div class="flex flex-col justify-center">
-                                <h5 class="text-white font-bold text-sm leading-tight">{{ $item->book->title ?? 'Book Title' }}</h5>
-                                <p class="text-[10px] text-tertiary font-bold uppercase mt-1">{{ $item->book->author ?? 'Wellness Author' }}</p>
+                                        <div class="flex gap-4">
+                                            <div class="w-16 h-20 bg-cover bg-center rounded shadow-md group-hover:scale-105 transition-transform" style="background-image: url('{{ $item->book->image ?? asset('default-book.jpg') }}')"></div>
+                                            <div class="flex flex-col justify-center">
+                                                <h5 class="text-white font-bold text-sm leading-tight">{{ $item->book->title ?? 'Book Title' }}</h5>
+                                                <p class="text-[10px] text-tertiary font-bold uppercase mt-1">{{ $item->book->author ?? 'Wellness Author' }}</p>
+                                            </div>
+                                        </div>
+
+                                        <a href="" class="mt-4 w-full bg-background-dark border border-border-dark hover:border-primary text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all">
+                                            <span class="material-symbols-outlined text-sm text-primary">download</span>
+                                            Download PDF
+                                        </a>
+                                    </div>
+                                    @empty
+                                    <p class="text-[#b5a1b4] text-sm italic">No books in your library.</p>
+                                    @endforelse
+                                </div>
                             </div>
                         </div>
-                        
-                        <a href="" class="mt-4 w-full bg-background-dark border border-border-dark hover:border-primary text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all">
-                            <span class="material-symbols-outlined text-sm text-primary">download</span>
-                            Download PDF
-                        </a>
-                    </div>
-                @empty
-                    <p class="text-[#b5a1b4] text-sm italic">No books in your library.</p>
-                @endforelse
-            </div>
-        </div>
-    </div>
-</section>
+                    </section>
 
                     <section>
                         <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
