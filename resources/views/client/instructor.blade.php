@@ -73,10 +73,9 @@
                         {!!$instructor->about_me!!}
                     </p>
                     <div class="mt-6 flex flex-wrap gap-3">
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 dark:bg-white/5 text-neutral-600 dark:text-gray-300 border border-neutral-200 dark:border-white/10">Hatha Yoga</span>
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 dark:bg-white/5 text-neutral-600 dark:text-gray-300 border border-neutral-200 dark:border-white/10">Mindfulness</span>
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 dark:bg-white/5 text-neutral-600 dark:text-gray-300 border border-neutral-200 dark:border-white/10">Nutrition</span>
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 dark:bg-white/5 text-neutral-600 dark:text-gray-300 border border-neutral-200 dark:border-white/10">Wellness Coaching</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 dark:bg-white/5 text-neutral-600 dark:text-gray-300 border border-neutral-200 dark:border-white/10">Biblical Money Coaching</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 dark:bg-white/5 text-neutral-600 dark:text-gray-300 border border-neutral-200 dark:border-white/10">Books</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 dark:bg-white/5 text-neutral-600 dark:text-gray-300 border border-neutral-200 dark:border-white/10">Church Structures</span>
                     </div>
                 </div>
             </div>
