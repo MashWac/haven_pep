@@ -102,7 +102,7 @@
           <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuApNg4zpd2tBtCUjN-D4mH7Vy6jzxQxFuesrUt0V5k6hQWDJw3ccoiRd3aTGepJdwFM6qlsiWzmr5iXnzRv12aetWafrn44mGGWetdp2RM9wNHNjWN5dsz4HY6T7fIdzr6V5kNTOKJZHKH0NqsnZJtFFPmsQoBZNZWmUirTyifogfklrHwejfjRi97tNlhRtqA4d3aGCGAO6mJcNVp7vHiEk8mY9q81KEn0LSvu1Vs5q2Zss2m0jix0njh6hqvyajUsVOXscCFvlpg");'></div>
           <div class="flex flex-col">
             <p class="text-[#171511] dark:text-white text-sm font-medium">Jane Admin</p>
-            <p class="text-[#877b64] text-xs">Sign out</p>
+            <a href="{{url('logout')}}" class="text-[#877b64] text-xs">Sign out</a>
           </div>
         </div>
       </div>
