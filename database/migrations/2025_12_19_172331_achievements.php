@@ -15,7 +15,7 @@ public function up(): void
         Schema::create('achievements', function (Blueprint $table) {
             $table->increments('id');
             $table->string('achievement')->nullable();
-            $table->string('icon')->unique();
+            $table->string('icon');
             $table->integer('instructor_id')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('updated_at')->nullable();
