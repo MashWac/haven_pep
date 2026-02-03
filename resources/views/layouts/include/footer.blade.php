@@ -7,7 +7,7 @@
                             <path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
                         </svg>
                     </div>
-                    <span class="text-lg font-bold">ZenLearn</span>
+                    <span class="text-lg font-bold">Haven PEP</span>
                 </div>
                 <div class="flex gap-8 text-sm text-gray-500 dark:text-gray-400">
                     <a class="hover:text-primary transition-colors" href="#">Privacy</a>
@@ -15,7 +15,7 @@
                     <a class="hover:text-primary transition-colors" href="#">Support</a>
                 </div>
                 <div class="text-sm text-gray-500 dark:text-gray-600">
-                    © 2023 ZenLearn Platform
+                    © {{ date('Y') }} Haven PEP Platform
                 </div>
             </div>
         </div>

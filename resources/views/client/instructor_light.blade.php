@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Instructor Profile - ZenLearn</title>
+<title>Instructor Profile - Haven PEP</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;family=Noto+Sans:wght@300..800&amp;display=swap" rel="stylesheet"/>
@@ -42,7 +42,7 @@
 <path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
 </svg>
 </div>
-<h2 class="text-xl font-bold tracking-tight text-neutral-900">ZenLearn</h2>
+<h2 class="text-xl font-bold tracking-tight text-neutral-900">Haven PEP</h2>
 </div>
 <nav class="hidden md:flex items-center gap-6">
 <a class="text-sm font-medium text-neutral-600 hover:text-primary transition-colors" href="#">Courses</a>
@@ -279,7 +279,7 @@
 <path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
 </svg>
 </div>
-<span class="text-lg font-bold">ZenLearn</span>
+<span class="text-lg font-bold">Haven PEP</span>
 </div>
 <div class="flex gap-8 text-sm text-neutral-500">
 <a class="hover:text-primary transition-colors" href="#">Privacy</a>
@@ -287,7 +287,7 @@
 <a class="hover:text-primary transition-colors" href="#">Support</a>
 </div>
 <div class="text-sm text-neutral-400">
-                    © 2023 ZenLearn Platform
+                    © {{ date('Y') }} HavenPep Platform
                 </div>
 </div>
 </div>

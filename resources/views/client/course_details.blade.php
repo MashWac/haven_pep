@@ -8,7 +8,7 @@
                 <div class="size-8 rounded-full bg-primary flex items-center justify-center text-white">
                     <span class="material-symbols-outlined">spa</span>
                 </div>
-                <h1 class="text-xl font-bold tracking-tight text-white">Wellness Hub</h1>
+                <!-- <h1 class="text-xl font-bold tracking-tight text-white">Wellness Hub</h1> -->
             </div>
             <div class="flex items-center gap-3 p-3 rounded-xl bg-surface-dark/50 border border-border-dark mb-6">
                 <div class="bg-center bg-no-repeat bg-cover rounded-full size-10 flex-shrink-0" data-alt="Portrait of Jane Doe looking calm" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCFRPxjB9p55RPQd3s83Fg8CZ3dm5wUBkA2t5-FOn0bWuhpKei9_s4mcR8LjEciED6ePcbOb_eaiuywCiafKIyL8RKqsjN27iT8RDkhkcfXwZgPihIimN3dFjl7QWiZThDim1vGB7U-AWCS4AFPxs1e-KmlDkOkMukmwZxhkzbRwCMqVMdjbw6uY_7kd213jeAqDLNwKP3IOs7b-uf1MDx4m23h5N2qP5SHeK1OWQwoRvmRoheJuyRS5hy7KFJ9PouKCe3hx6H0zh8");'></div>

@@ -13,7 +13,7 @@
                     <div class="size-8 rounded-full bg-primary flex items-center justify-center text-white">
                         <span class="material-symbols-outlined">spa</span>
                     </div>
-                    <h1 class="text-xl font-bold tracking-tight text-white">Wellness Hub</h1>
+                    <!-- <h1 class="text-xl font-bold tracking-tight text-white">Wellness Hub</h1> -->
                 </div>
                 <!-- User Profile Snippet -->
                 <div class="flex items-center gap-3 p-3 rounded-xl bg-surface-dark/50 border border-border-dark mb-6">

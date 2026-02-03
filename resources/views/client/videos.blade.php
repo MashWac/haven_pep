@@ -75,7 +75,7 @@
                 <div class="size-8 flex items-center justify-center text-primary">
                     <span class="material-symbols-outlined text-3xl">spa</span>
                 </div>
-                <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Wellness Hub</h2>
+                <!-- <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Wellness Hub</h2> -->
             </div>
             <div class="hidden md:flex items-center gap-9">
                 <a class="text-[#171217] dark:text-white hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Dashboard</a>

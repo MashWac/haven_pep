@@ -46,7 +46,7 @@
       <div class="flex flex-col h-full justify-between p-4">
         <div class="flex flex-col gap-4">
           <div class="flex gap-3 items-center mb-6 px-2">
-            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBXnDqPDjRc4zgEWm3ooskMsxiAn92iMWMJSiKvfJO0NuMOVo2gRWa4WnMcKQWIF8HfBdK7csA9M0AWSilxOS9R4OKvn1ec_gHDWcs8Be8P1zd8hdV3EUocJBLqnGLZoHyUiBWS0utkHo-EcFzY4iiYLY32K3twT37uCofyhIwgc0zBSI8HbbjiZVzF-WtQzG3DUph3xepHIMolTaYForkmS3e9RKJNQ-K2leC4q3DPhdTg6JHq5KcoMF15o3t7zjhbAm0Fgbr3qNU");'></div>
+            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("{{ asset("images/logo.png") }}")'></div>
             <div class="flex flex-col">
               <h1 class="text-[#171511] dark:text-white text-base font-bold leading-normal">Admin Panel</h1>
               <p class="text-[#877b64] text-xs font-normal leading-normal">Wellness Platform</p>

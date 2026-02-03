@@ -1,10 +1,10 @@
 <header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-b-surface-dark dark:border-b-[#362b36] bg-background-light dark:bg-background-dark px-10 py-3">
     <div class="flex items-center gap-8">
         <div class="flex items-center gap-4 dark:text-white text-gray-900">
-            <div class="size-8 text-primary">
-                <span class="material-symbols-outlined !text-3xl">local_library</span>
+            <div class="size-20 text-primary">
+        <img src="{{ asset('images/logo.png') }}" alt="Haven PEP Logo" class="w-full h-full object-contain">
             </div>
-            <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Wellness Reads</h2>
+            <!-- <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Haven PEP</h2> -->
         </div>
         <nav class="hidden md:flex items-center gap-9">
             <a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="{{url('/')}}">Home</a>
