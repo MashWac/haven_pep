@@ -354,7 +354,7 @@
                             <span class="text-xs font-medium text-[#877b64] uppercase tracking-wider">PowerPoint File</span>
                             <div class="flex items-center gap-3 p-3 rounded-lg bg-background-light dark:bg-[#362f22] border border-dashed border-[#e5e2dc] dark:border-[#4a402e]">
                                 <span class="material-symbols-outlined text-[#40B5AD]">description</span>
-                                <input type="file" name="lessons[${i}][ppt]" accept=".ppt,.pptx,pdf" class="text-xs text-[#171511] dark:text-white file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-[#40B5AD]/10 file:text-[#40B5AD] hover:file:bg-[#40B5AD]/20">
+                                <input type="file" name="lessons[${i}][ppt]" accept=".ppt,.pptx,.pdf" class="text-xs text-[#171511] dark:text-white file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-[#40B5AD]/10 file:text-[#40B5AD] hover:file:bg-[#40B5AD]/20">
                             </div>
                         </div>
                     </div>
