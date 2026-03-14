@@ -22,10 +22,11 @@
                 </div>
                 <div class="max-w-md">
                     <h2 class="text-2xl font-bold leading-tight text-white mb-4">
-                        "The journey of a thousand miles begins with a single step."
+                        "Join a community of over 10,000 learners on a structured, faith-centered journey of growth."
                     </h2>
                     <p class="text-base text-tertiary font-medium text-white/80">
-                        Join over 50,000 community members transforming their lives through daily practice.
+                        Access carefully selected courses and resources designed for clarity, discipline, and measurable progress.
+Create your account today to get started.
                     </p>
                     <div class="mt-6 flex items-center gap-4">
                         <div class="flex -space-x-3 overflow-hidden">

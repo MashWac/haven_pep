@@ -72,7 +72,10 @@ class userController extends Controller
             ->get();
         $material_count = courseMaterialsModel::where('course_id', $id)->count();
         $all_courses_count = coursesModel::count();
-        return view('client.course_progress', compact('course_details', 'instructor', 'course_lessons', 'material_count', 'all_courses_count'));
+        // dd(session('user_id'));
+        $course_progress = courseProgressModel::where('user_id', session('user_id'))->where('course_id', $id)->first();
+        // dd($course_progress);
+        return view('client.course_progress', compact('course_details', 'instructor', 'course_lessons', 'material_count', 'all_courses_count', 'course_progress'));
     }
     public function updateProgress(Request $request)
     {

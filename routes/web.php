@@ -47,7 +47,7 @@ Route::get('/password_reset_form/{token}', [AuthenticationController::class, 'pa
 Route::get('/my_profile', [userController::class, 'myProfile']);
 Route::get('/orders/receipt/{id}', [userController::class, 'downloadReceipt']);
 Route::get('/courses/continue/{id}',[userController::class, 'progressWithCourse']);
-Route::post('/course/update_progress',[userController::class,'']);
+Route::post('/course/update_progress',[userController::class,'updateProgress']);
 Route::get('/course/get_video_url/{course_id}/{lesson_number}',[userController::class,'fetchVideoUrl']);
 Route::get('/course/get_pptx_url/{course_id}/{lesson_number}',[userController::class,'fetchPptxUrl']);
 

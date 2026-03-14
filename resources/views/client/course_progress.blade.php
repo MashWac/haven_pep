@@ -62,10 +62,10 @@
                     <div class="bg-surface-dark rounded-2xl p-6 border border-border-dark sticky top-24">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="text-white font-bold text-lg">Course Progress</h3>
-                            <span class="text-primary font-bold">35%</span>
+                            <span class="text-primary font-bold">{{ $course_progress ? round(($course_progress->lesson_number / $course_details->no_of_lessons) * 100) : 0 }}%</span>
                         </div>
                         <div class="h-2 w-full bg-background-dark rounded-full overflow-hidden mb-6">
-                            <div class="h-full bg-primary w-[35%] rounded-full"></div>
+                            <div class="h-full bg-primary rounded-full" style="width: {{ $course_progress ? round(($course_progress->lesson_number / $course_details->no_of_lessons) * 100) : 0 }}%"></div>
                         </div>
                         <div class="space-y-4">
                             <div class="flex items-center gap-4 text-gray-300">
@@ -74,16 +74,7 @@
                                 </div>
                                 <div>
                                     <p class="text-xs text-[#b5a1b4]">Lessons</p>
-                                    <p class="font-bold">8 / 24 Completed</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4 text-gray-300">
-                                <div class="size-10 rounded-lg bg-background-dark flex items-center justify-center text-tertiary">
-                                    <span class="material-symbols-outlined">quiz</span>
-                                </div>
-                                <div>
-                                    <p class="text-xs text-[#b5a1b4]">Quizzes</p>
-                                    <p class="font-bold">2 / 5 Passed</p>
+                                    <p class="font-bold">{{ $course_progress->lesson_number ?? 0 }} / {{ $course_lessons->count() }} Completed</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-4 text-gray-300">
@@ -92,12 +83,12 @@
                                 </div>
                                 <div>
                                     <p class="text-xs text-[#b5a1b4]">Resources</p>
-                                    <p class="font-bold">12 Files Available</p>
+                                    <p class="font-bold">{{$material_count}} Available</p>
                                 </div>
                             </div>
                         </div>
                         <button class="w-full mt-8 bg-primary hover:bg-primary/90 text-[#171217] font-bold py-3 rounded-xl transition-colors">
-                            Continue Learning
+                            View Lessons
                         </button>
                     </div>
                 </section>
@@ -105,24 +96,24 @@
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-2xl font-bold text-white">Course Curriculum</h3>
                         <div class="flex gap-2">
-                            <button class="text-sm text-[#b5a1b4] hover:text-white px-3 py-1.5 rounded bg-surface-dark hover:bg-surface-dark/80 transition-colors">Expand All</button>
-                            <button class="text-sm text-[#b5a1b4] hover:text-white px-3 py-1.5 rounded bg-surface-dark hover:bg-surface-dark/80 transition-colors">Collapse All</button>
+                            <button id="expand-all" class="text-sm text-[#b5a1b4] hover:text-white px-3 py-1.5 rounded bg-surface-dark hover:bg-surface-dark/80 transition-colors">Expand All</button>
+                            <button id="collapse-all" class="text-sm text-[#b5a1b4] hover:text-white px-3 py-1.5 rounded bg-surface-dark hover:bg-surface-dark/80 transition-colors">Collapse All</button>
                         </div>
                     </div>
                     <div class="space-y-4">
-                        <div class="border border-border-dark rounded-xl overflow-hidden bg-surface-dark/30">
-                            <div class="bg-surface-dark p-4 flex items-center justify-between cursor-pointer">
+                        <div class="border border-border-dark rounded-xl overflow-hidden bg-surface-dark/30 curriculum-section">
+                            <div class="bg-surface-dark p-4 flex items-center justify-between cursor-pointer curriculum-header">
                                 <div class="flex items-center gap-3">
                                     <span class="bg-primary/20 text-primary size-6 flex items-center justify-center rounded text-xs font-bold">1</span>
                                     <h4 class="text-white font-semibold">Introduction to Breathwork</h4>
                                 </div>
                                 <div class="flex items-center gap-4 text-sm text-[#b5a1b4]">
                                     <span>3 Lessons • 45m</span>
-                                    <span class="material-symbols-outlined">keyboard_arrow_up</span>
+                                    <span class="material-symbols-outlined arrow-icon">keyboard_arrow_up</span>
                                 </div>
                             </div>
                             @foreach ($course_lessons as $lesson)
-                            <div class="p-4 border-t border-border-dark bg-background-dark/50 hover:bg-background-dark transition-colors">
+                            <div class="lesson-item p-4 border-t border-border-dark bg-background-dark/50 hover:bg-background-dark transition-colors">
                                 <div class="flex flex-col md:flex-row gap-6">
                                     <div class="relative w-full md:w-48 aspect-video rounded-lg overflow-hidden bg-surface-dark flex-shrink-0 group cursor-pointer">
                                         <div class="absolute inset-0 bg-cover bg-center opacity-60 group-hover:opacity-100 transition-opacity" style="background-image: url('{{ asset($course_details->cover_image) }}');"></div>
@@ -222,7 +213,38 @@
 @endsection
 @section('scripts')
 <script>
+    // Current lesson: last lesson the user was on, or lesson 1 if no progress
+    const currentLessonNumber = {{ $course_progress ? $course_progress->lesson_number : 1 }};
+    const currentCourseId = {{ $course_details->id }};
+
     document.addEventListener('DOMContentLoaded', function() {
+        // Expand all lessons on page load
+        expandAllLessons();
+
+
+        // Expand All button
+        document.getElementById('expand-all').addEventListener('click', expandAllLessons);
+
+        // Collapse All button
+        document.getElementById('collapse-all').addEventListener('click', collapseAllLessons);
+
+        // Individual section toggle
+        document.querySelectorAll('.curriculum-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const section = this.closest('.curriculum-section');
+                const lessons = section.querySelectorAll('.lesson-item');
+                const arrow = this.querySelector('.arrow-icon');
+
+                const isExpanded = lessons[0] && lessons[0].style.display !== 'none';
+
+                lessons.forEach(lesson => {
+                    lesson.style.display = isExpanded ? 'none' : 'block';
+                });
+
+                arrow.textContent = isExpanded ? 'keyboard_arrow_down' : 'keyboard_arrow_up';
+            });
+        });
+
         // Play Lesson Video Function
         document.querySelectorAll('.play_lesson_video').forEach(button => {
             button.addEventListener('click', function(e) {
@@ -252,11 +274,14 @@
                         console.log(response)
                         button.disabled = false;
                         button.innerHTML = originalContent;
-                        
+
                         if (response.success && response.video_url) {
                             // Update video player with new lesson
                             updateVideoPlayer(response.video_url, lessonTitle, lessonDescription);
-                            
+
+                            // Track progress
+                            updateProgress(courseId, lessonNumber);
+
                             // Scroll to video section
                             document.getElementById('lesson-video-container').scrollIntoView({
                                 behavior: 'smooth',
@@ -270,7 +295,7 @@
                         button.disabled = false;
                         button.innerHTML = originalContent;
                         console.error("Error fetching video:", xhr.responseText);
-                        
+
                         let errorMessage = 'Failed to load video';
                         if (xhr.responseJSON && xhr.responseJSON.message) {
                             errorMessage = xhr.responseJSON.message;
@@ -286,7 +311,7 @@
             button.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                
+
                 const courseId = this.getAttribute('data-course-id');
                 const lessonNumber = this.getAttribute('data-lesson-number');
                 const lessonTitle = this.getAttribute('data-lesson-title');
@@ -309,7 +334,7 @@
                     success: function(response) {
                         button.disabled = false;
                         button.innerHTML = originalContent;
-                        
+
                         if (response.success && response.pptx_url) {
                             // Start download
                             downloadPowerPoint(courseId, response.pptx_url, lessonTitle, button);
@@ -321,7 +346,7 @@
                         button.disabled = false;
                         button.innerHTML = originalContent;
                         console.error("Error fetching PowerPoint:", xhr.responseText);
-                        
+
                         let errorMessage = 'Failed to download PowerPoint';
                         if (xhr.responseJSON && xhr.responseJSON.message) {
                             errorMessage = xhr.responseJSON.message;
@@ -331,7 +356,46 @@
                 });
             });
         });
+
+        // Auto-load the current lesson's video on page load
+        loadLessonVideo(currentCourseId, currentLessonNumber);
     });
+
+    // Load a lesson video by course ID and lesson number (used for auto-load on page open)
+    function loadLessonVideo(courseId, lessonNumber) {
+        $.ajax({
+            url: `/course/get_video_url/${courseId}/${lessonNumber}`,
+            method: 'GET',
+            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+            success: function(response) {
+                if (response.success && response.video_url) {
+                    const title = response.lesson_title || 'Lesson ' + lessonNumber;
+                    const desc  = document.querySelector(`.play_lesson_video[data-lesson-number="${lessonNumber}"]`)?.getAttribute('data-lesson-description') || '';
+                    updateVideoPlayer(response.video_url, title, desc);
+
+                    // Track progress
+                    updateProgress(courseId, lessonNumber);
+                }
+                // If no video, leave the thumbnail placeholder as-is (no error toast)
+            },
+            error: function() {
+                // Silently fail on auto-load — user can manually click any lesson
+            }
+        });
+    }
+
+    // POST progress update to /course/update_progress
+    function updateProgress(courseId, lessonNumber) {
+        $.ajax({
+            url: '/course/update_progress',
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+            data: {
+                course_id: courseId,
+                lesson_id: lessonNumber
+            }
+        });
+    }
 
     // Function to update video player
     function updateVideoPlayer(videoUrl, title, description) {
@@ -500,6 +564,28 @@
             setTimeout(() => toast.remove(), 300);
         }, 4000);
     }
+
+    // Function to expand all lessons
+    function expandAllLessons() {
+        document.querySelectorAll('.lesson-item').forEach(lesson => {
+            lesson.style.display = 'block';
+        });
+        document.querySelectorAll('.arrow-icon').forEach(arrow => {
+            arrow.textContent = 'keyboard_arrow_up';
+        });
+    }
+
+
+
+    // Function to collapse all lessons
+    function collapseAllLessons() {
+        document.querySelectorAll('.lesson-item').forEach(lesson => {
+            lesson.style.display = 'none';
+        });
+        document.querySelectorAll('.arrow-icon').forEach(arrow => {
+            arrow.textContent = 'keyboard_arrow_down';
+        });
+    }
 </script>
 
 <style>
@@ -508,6 +594,7 @@
             transform: translateX(100%);
             opacity: 0;
         }
+
         to {
             transform: translateX(0);
             opacity: 1;
@@ -519,6 +606,7 @@
             transform: translateX(0);
             opacity: 1;
         }
+
         to {
             transform: translateX(100%);
             opacity: 0;
@@ -537,6 +625,7 @@
         from {
             transform: rotate(0deg);
         }
+
         to {
             transform: rotate(360deg);
         }
