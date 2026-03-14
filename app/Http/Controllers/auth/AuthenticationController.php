@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\CountriesModel;
 use App\Models\userDetailsModel;
 use Illuminate\Http\Request;
 
@@ -34,7 +35,8 @@ class AuthenticationController extends Controller
     }
     public function register()
     {
-        return view('client.register');
+        $data['countries'] = CountriesModel::all();
+        return view('client.register', compact('data'));
     }
 
     public function registerUser(Request $request)

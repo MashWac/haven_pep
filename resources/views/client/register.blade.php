@@ -51,7 +51,7 @@
                     <p class="text-slate-500 dark:text-[#b5a1b4] text-base">Start your wellness journey today.</p>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
+                <!-- <div class="grid grid-cols-2 gap-4">
                     <button class="group flex items-center justify-center gap-3 h-12 rounded-lg border border-slate-200 dark:border-[#503f4f] bg-white dark:bg-[#251d25] hover:bg-slate-50 transition-all">
                         <img alt="Google" class="w-5 h-5" src="https://www.svgrepo.com/show/475656/google-color.svg" />
                         <span class="text-sm font-bold text-slate-700 dark:text-white">Google</span>
@@ -60,13 +60,13 @@
                         <span class="material-symbols-outlined text-[22px]">ios</span>
                         <span class="text-sm font-bold text-slate-700 dark:text-white">Apple</span>
                     </button>
-                </div>
-
+                </div> -->
+<!-- 
                 <div class="relative flex items-center gap-4">
                     <div class="h-px flex-1 bg-slate-200 dark:bg-[#362b36]"></div>
                     <span class="text-xs font-semibold text-slate-400 dark:text-[#6b586b] uppercase tracking-wider">Or email</span>
                     <div class="h-px flex-1 bg-slate-200 dark:bg-[#362b36]"></div>
-                </div>
+                </div> -->
 
                 <form action="{{ url('register_member') }}" method="POST" class="flex flex-col gap-5">
                     @csrf
@@ -95,9 +95,11 @@
                                 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors text-[20px]">flag</span>
                                 <select name="country_code" required class="form-select w-full rounded-lg border border-slate-200 dark:border-[#503f4f] bg-white dark:bg-[#251d25] pl-11 pr-4 h-12 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary transition-all @error('password') border-red-500 @enderror">
                                     <option value="">Select Country Code</option>
-                                    <option value="+1">USA (+1)</option>
-                                    <option value="+44">UK (+44)</option>
-                                    <option value="+91">India (+91)</option>
+                                    @foreach($data['countries'] as $country)
+                                        <option value="{{ $country->phone_code }}" {{ old('country_code') == $country->phone_code ? 'selected' : '' }}>
+                                            {{ $country->name }} ({{ $country->phone_code }})
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                         </label>

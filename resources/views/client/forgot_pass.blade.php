@@ -17,7 +17,7 @@
                     <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/20 text-primary backdrop-blur-sm">
                         <span class="material-symbols-outlined text-2xl">spa</span>
                     </div>
-                    <span class="text-xl font-bold tracking-wide text-white">WellnessFlow</span>
+                    <span class="text-xl font-bold tracking-wide text-white">HavenPEP</span>
                 </div>
                 <div class="max-w-md">
                     <h2 class="text-3xl font-bold leading-tight text-white mb-4">
@@ -78,7 +78,7 @@
 
                     <div class="mt-8 text-center">
                         <p class="text-sm text-slate-500 dark:text-[#b5a1b4]">
-                            New to WellnessFlow?
+                            New to HavenPEP?
                             <a class="font-semibold text-secondary hover:text-secondary/80 ml-1" href="{{ url('/register') }}">Create an account</a>
                         </p>
                     </div>
