@@ -117,14 +117,20 @@
                             <span class="text-sm font-medium text-slate-700 dark:text-tertiary-cream">Password</span>
                             <div class="relative group">
                                 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors text-[20px]">lock</span>
-                                <input name="password" type="password" required class="form-input w-full rounded-lg border border-slate-200 dark:border-[#503f4f] bg-white dark:bg-[#251d25] pl-11 pr-4 h-12 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary transition-all @error('password') border-red-500 @enderror" placeholder="Min. 8 chars">
+                                <input id="password" name="password" type="password" required class="form-input w-full rounded-lg border border-slate-200 dark:border-[#503f4f] bg-white dark:bg-[#251d25] pl-11 pr-10 h-12 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary transition-all @error('password') border-red-500 @enderror" placeholder="Min. 8 chars">
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer group" onclick="togglePassword('password', 'eye-icon-password')">
+                                    <span id="eye-icon-password" class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors text-[20px]">visibility</span>
+                                </div>
                             </div>
                         </label>
                         <label class="flex flex-col gap-2">
                             <span class="text-sm font-medium text-slate-700 dark:text-tertiary-cream">Confirm</span>
                             <div class="relative group">
                                 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors text-[20px]">lock_reset</span>
-                                <input name="password_confirmation" type="password" required class="form-input w-full rounded-lg border border-slate-200 dark:border-[#503f4f] bg-white dark:bg-[#251d25] pl-11 pr-4 h-12 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Re-enter">
+                                <input id="password_confirmation" name="password_confirmation" type="password" required class="form-input w-full rounded-lg border border-slate-200 dark:border-[#503f4f] bg-white dark:bg-[#251d25] pl-11 pr-10 h-12 text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Re-enter">
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer group" onclick="togglePassword('password_confirmation', 'eye-icon-confirm')">
+                                    <span id="eye-icon-confirm" class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors text-[20px]">visibility</span>
+                                </div>
                             </div>
                         </label>
                     </div>
@@ -145,4 +151,20 @@
         </div>
     </div>
 </body>
+@endsection
+
+@section('scripts')
+<script>
+    function togglePassword(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.innerText = 'visibility_off';
+        } else {
+            input.type = 'password';
+            icon.innerText = 'visibility';
+        }
+    }
+</script>
 @endsection
