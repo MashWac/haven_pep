@@ -103,7 +103,7 @@ class userController extends Controller
         ]);   
      }
     public function fetchPptxUrl(Request $request,$course_id,$lesson_number){
-        $course_data=courseMaterialsModel::select('material_url')->where('course_id',$course_id)->where('lesson_number',$lesson_number)->where('document_type','pptx')->first();
+        $course_data=courseMaterialsModel::select('material_url')->where('course_id',$course_id)->where('lesson_number',$lesson_number)->whereIn('document_type',['pptx','pdf'])->first();
         return response()->json([
             'success' => true,
             'pptx_url' => $course_data->material_url,
