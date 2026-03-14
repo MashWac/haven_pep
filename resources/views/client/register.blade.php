@@ -17,7 +17,7 @@
                     <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/20 backdrop-blur-md border border-primary/20 text-primary">
                         <span class="material-symbols-outlined">spa</span>
                     </div>
-                    <h2 class="text-white text-xl font-bold tracking-tight">Wellness Platform</h2>
+                    <h2 class="text-white text-xl font-bold tracking-tight">Money Platform</h2>
                 </div>
 
                 <div class="max-w-lg mb-8">
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="text-sm text-gray-300/60 font-medium">
-                    © {{ date('Y') }} Wellness Platform Inc. All rights reserved.
+                    © {{ date('Y') }} HavenPEP Platform Inc. All rights reserved.
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
             <div class="w-full max-w-[480px] flex flex-col gap-8 mt-10 lg:mt-0">
                 <div class="flex flex-col gap-2 text-center lg:text-left">
                     <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">Get Started</h2>
-                    <p class="text-slate-500 dark:text-[#b5a1b4] text-base">Start your wellness journey today.</p>
+                    <p class="text-slate-500 dark:text-[#b5a1b4] text-base">Start your money journey today.</p>
                 </div>
 
                 <!-- <div class="grid grid-cols-2 gap-4">
