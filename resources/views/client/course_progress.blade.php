@@ -487,11 +487,17 @@
         Downloading...
     `;
 
+        // Extract the file extension from the URL and build filename from lesson title
+        const urlPath = pptxUrl.split('?')[0]; // strip query string
+        const ext = urlPath.substring(urlPath.lastIndexOf('.')) || '';
+        const cleanTitle = lessonTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+        const filename = cleanTitle + ext;
+
         // Create a direct download link and trigger it
         const a = document.createElement('a');
         a.style.display = 'none';
         a.href = pptxUrl;
-        a.download = '';  // Let the browser use the filename from the URL/server
+        a.download = filename;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
