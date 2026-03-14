@@ -487,45 +487,20 @@
         Downloading...
     `;
 
-        // Create download link
-        fetch(pptxUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Download failed');
-                }
-                return response.blob();
-            })
-            .then(blob => {
-                // Create temporary download link
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.style.display = 'none';
-                a.href = url;
+        // Create a direct download link and trigger it
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = pptxUrl;
+        a.download = '';  // Let the browser use the filename from the URL/server
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
 
-                // Clean filename
-                const cleanTitle = lessonTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-                a.download = `${cleanTitle}_slides.pptx`;
+        // Reset button
+        buttonElement.disabled = false;
+        buttonElement.innerHTML = originalContent;
 
-                // Trigger download
-                document.body.appendChild(a);
-                a.click();
-
-                // Cleanup
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
-
-                // Reset button
-                buttonElement.disabled = false;
-                buttonElement.innerHTML = originalContent;
-
-                showToast('PowerPoint downloaded successfully!', 'success');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                buttonElement.disabled = false;
-                buttonElement.innerHTML = originalContent;
-                showToast('Failed to download PowerPoint. Please try again.', 'error');
-            });
+        showToast('Download started!', 'success');
     }
 
     // Toast notification function
