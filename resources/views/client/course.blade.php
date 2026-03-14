@@ -75,14 +75,15 @@
                         <h2 class="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">{{$top_course->course_name}}</h2>
                         <p class="text-gray-300 text-lg mb-8 max-w-xl">{!!$top_course->course_description!!}</p>
                         <div class="flex flex-wrap items-center gap-4">
-                            <button data-id="{{ $top_course->id }}" data-type="course" class="bg-primary hover:bg-primary/90 text-[#171217] px-8 py-3.5 rounded-xl font-bold flex items-center gap-2 transition-transform active:scale-95 shadow-lg shadow-primary/25">
+                            <button data-id="{{ $top_course->id }}" data-type="course" class="add-to-cart-btn bg-primary hover:bg-primary/90 text-[#171217] px-8 py-3.5 rounded-xl font-bold flex items-center gap-2 transition-transform active:scale-95 shadow-lg shadow-primary/25">
                                 <span class="material-symbols-outlined fill">shop</span>
                                 Add to Cart
                             </button>
-                            <button class="bg-surface-dark/80 backdrop-blur border border-white/10 hover:bg-white/10 text-white px-6 py-3.5 rounded-xl font-medium flex items-center gap-2 transition-colors">
-                                <span class="material-symbols-outlined">add</span>
-                                Add to wishlist
-                            </button>
+                                <a href="{{ url('/course_details/' . $top_course->id) }}" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg font-bold backdrop-blur-sm transition-all">
+                                    <span class="material-symbols-outlined">visibility</span>
+                                    <span>View Details</span>
+                                </a>
+
                         </div>
                         <!-- Progress Bar -->
                         <div class="mt-8 w-full max-w-md">
@@ -114,42 +115,42 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                         <!-- Card 1 -->
                         @foreach($courses as $course)
-<a href="{{ url('/course_details/' . $course->id) }}" class="group block">
-    <div class="flex flex-col gap-3">
-        <div class="relative aspect-video rounded-xl overflow-hidden bg-surface-dark shadow-lg">
-            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" 
-                 style="background-image: url('{{ asset($course->cover_image) }}');">
-            </div>
-            
-            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
-            
-            <div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded">
-                {{ $course->course_duration }} {{ $course->duration_unit }}
-            </div>
-            
-            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <div class="bg-white/20 backdrop-blur-sm p-3 rounded-full border border-white/30 text-white">
-                    <span class="material-symbols-outlined fill text-4xl">visibility</span>
-                </div>
-            </div>
-        </div>
+                        <a href="{{ url('/course_details/' . $course->id) }}" class="group block">
+                            <div class="flex flex-col gap-3">
+                                <div class="relative aspect-video rounded-xl overflow-hidden bg-surface-dark shadow-lg">
+                                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                                        style="background-image: url('{{ asset($course->cover_image) }}');">
+                                    </div>
 
-        <div class="flex gap-3 items-start">
-            <div class="size-9 rounded-full bg-gray-600 bg-cover bg-center flex-shrink-0 border border-border-dark" 
-                 style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD4WyW-HBDkgCRGxTWBnUm539sV9Wcysi7lKk3p3-gf0oTPXq3iPoWMw2YleRumb3oUxNNMyc9e4cbxP36Ut-N0cZTGkfw-7Bvzl-HJRURXCs5nky561qFR8qF2wN86E2DLy7UB4sw-unVln0iidO5A5OmOUuzHrPKFEPo_PltjqEi2RRXyhpSIqb0FraIAIxtpxBYbYLXHKG8rHbOD6I0LzizJ9wJowMfdVjAkBd-pYfXTOBs-5GocCYuPjJM5RFAaUBgsNcD0UHI")'>
-            </div>
-            
-            <div class="flex flex-col">
-                <h4 class="text-white font-semibold leading-tight group-hover:text-primary transition-colors">
-                    {{ $course->course_name }}
-                </h4>
-                <p class="text-[#b5a1b4] text-sm mt-1">
-                    {{ $instructor->full_name }} • {{ $course->category_name }}
-                </p>
-            </div>
-        </div>
-    </div>
-</a>
+                                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
+
+                                    <div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded">
+                                        {{ $course->course_duration }} {{ $course->duration_unit }}
+                                    </div>
+
+                                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <div class="bg-white/20 backdrop-blur-sm p-3 rounded-full border border-white/30 text-white">
+                                            <span class="material-symbols-outlined fill text-4xl">visibility</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-3 items-start">
+                                    <div class="size-9 rounded-full bg-gray-600 bg-cover bg-center flex-shrink-0 border border-border-dark"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD4WyW-HBDkgCRGxTWBnUm539sV9Wcysi7lKk3p3-gf0oTPXq3iPoWMw2YleRumb3oUxNNMyc9e4cbxP36Ut-N0cZTGkfw-7Bvzl-HJRURXCs5nky561qFR8qF2wN86E2DLy7UB4sw-unVln0iidO5A5OmOUuzHrPKFEPo_PltjqEi2RRXyhpSIqb0FraIAIxtpxBYbYLXHKG8rHbOD6I0LzizJ9wJowMfdVjAkBd-pYfXTOBs-5GocCYuPjJM5RFAaUBgsNcD0UHI")'>
+                                    </div>
+
+                                    <div class="flex flex-col">
+                                        <h4 class="text-white font-semibold leading-tight group-hover:text-primary transition-colors">
+                                            {{ $course->course_name }}
+                                        </h4>
+                                        <p class="text-[#b5a1b4] text-sm mt-1">
+                                            {{ $instructor->full_name }} • {{ $course->category_name }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
                         @endforeach
                     </div>
                 </section>
@@ -169,42 +170,42 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                         <!-- Card 5 -->
                         @foreach ($courses as $course)
-<a href="{{ url('/course_details/' . $course->id) }}" class="group block">
-    <div class="flex flex-col gap-3">
-        <div class="relative aspect-video rounded-xl overflow-hidden bg-surface-dark shadow-lg">
-            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" 
-                 style="background-image: url('{{ asset($course->cover_image) }}');">
-            </div>
-            
-            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
-            
-            <div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded">
-                {{ $course->course_duration }} {{ $course->duration_unit }}
-            </div>
-            
-            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <div class="bg-white/20 backdrop-blur-sm p-3 rounded-full border border-white/30 text-white">
-                    <span class="material-symbols-outlined fill text-4xl">visibility</span>
-                </div>
-            </div>
-        </div>
+                        <a href="{{ url('/course_details/' . $course->id) }}" class="group block">
+                            <div class="flex flex-col gap-3">
+                                <div class="relative aspect-video rounded-xl overflow-hidden bg-surface-dark shadow-lg">
+                                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                                        style="background-image: url('{{ asset($course->cover_image) }}');">
+                                    </div>
 
-        <div class="flex gap-3 items-start">
-            <div class="size-9 rounded-full bg-gray-600 bg-cover bg-center flex-shrink-0 border border-border-dark" 
-                 style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD4WyW-HBDkgCRGxTWBnUm539sV9Wcysi7lKk3p3-gf0oTPXq3iPoWMw2YleRumb3oUxNNMyc9e4cbxP36Ut-N0cZTGkfw-7Bvzl-HJRURXCs5nky561qFR8qF2wN86E2DLy7UB4sw-unVln0iidO5A5OmOUuzHrPKFEPo_PltjqEi2RRXyhpSIqb0FraIAIxtpxBYbYLXHKG8rHbOD6I0LzizJ9wJowMfdVjAkBd-pYfXTOBs-5GocCYuPjJM5RFAaUBgsNcD0UHI")'>
-            </div>
-            
-            <div class="flex flex-col">
-                <h4 class="text-white font-semibold leading-tight group-hover:text-primary transition-colors">
-                    {{ $course->course_name }}
-                </h4>
-                <p class="text-[#b5a1b4] text-sm mt-1">
-                    {{ $instructor->full_name }} • {{ $course->category_name }}
-                </p>
-            </div>
-        </div>
-    </div>
-</a>
+                                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
+
+                                    <div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded">
+                                        {{ $course->course_duration }} {{ $course->duration_unit }}
+                                    </div>
+
+                                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <div class="bg-white/20 backdrop-blur-sm p-3 rounded-full border border-white/30 text-white">
+                                            <span class="material-symbols-outlined fill text-4xl">visibility</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-3 items-start">
+                                    <div class="size-9 rounded-full bg-gray-600 bg-cover bg-center flex-shrink-0 border border-border-dark"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD4WyW-HBDkgCRGxTWBnUm539sV9Wcysi7lKk3p3-gf0oTPXq3iPoWMw2YleRumb3oUxNNMyc9e4cbxP36Ut-N0cZTGkfw-7Bvzl-HJRURXCs5nky561qFR8qF2wN86E2DLy7UB4sw-unVln0iidO5A5OmOUuzHrPKFEPo_PltjqEi2RRXyhpSIqb0FraIAIxtpxBYbYLXHKG8rHbOD6I0LzizJ9wJowMfdVjAkBd-pYfXTOBs-5GocCYuPjJM5RFAaUBgsNcD0UHI")'>
+                                    </div>
+
+                                    <div class="flex flex-col">
+                                        <h4 class="text-white font-semibold leading-tight group-hover:text-primary transition-colors">
+                                            {{ $course->course_name }}
+                                        </h4>
+                                        <p class="text-[#b5a1b4] text-sm mt-1">
+                                            {{ $instructor->full_name }} • {{ $course->category_name }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
                         @endforeach
 
 

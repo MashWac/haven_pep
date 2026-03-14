@@ -107,7 +107,11 @@
                 <div class="bg-gradient-to-br from-primary/20 to-secondary/20 rounded-xl p-6 border border-white/5">
                     <h3 class="text-lg font-bold mb-4">Let's Connect</h3>
                     <p class="text-sm text-gray-400 mb-6">Follow my daily journey and quick tips on social media.</p>
-                    <div class="flex gap-4">
+                    <div class="flex items-center gap-2 text-sm text-gray-400 mb-6">
+                        <span class="material-symbols-outlined">email</span>
+                        <span><b>biblicalmoneycoaching@gmail.com</b></span>
+                    </div>
+{{--                    <div class="flex gap-4">
                         <a class="size-10 rounded-full bg-background-dark flex items-center justify-center hover:text-primary transition-colors" href="{{ $instructor->instagram_url }}">
                             <!-- Instagram-ish icon using material symbol for generic -->
                             <span class="material-symbols-outlined">photo_camera</span>
@@ -116,9 +120,9 @@
                             <span class="material-symbols-outlined">smart_display</span>
                         </a>
                         <a class="size-10 rounded-full bg-background-dark flex items-center justify-center hover:text-tertiary transition-colors" href="{{ $instructor->email_address }}">
-                            <span class="material-symbols-outlined">alternate_email</span>
+                            <span class="material-symbols-outlined">alternate_email</span>biblicalmoneycoaching@gmail.co<span>
                         </a>
-                    </div>
+                    </div>--}}
                 </div>
             </div>
             <!-- Right Column: Courses & Testimonials -->

@@ -85,13 +85,16 @@
                             <h1 class="text-3xl md:text-5xl font-black text-white mb-4 tracking-tight">{{$top_book->title}}</h1>
                             <p class="text-gray-300 text-sm md:text-lg mb-6 max-w-lg">{{$top_book->subtitle}}</p>
                             <div class="flex gap-4">
-                                <button class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-bold transition-all shadow-[0_0_20px_-5px_#da71d7]">
+            
+                                <button data-id="{{ $top_book->id }}" data-type="book" class="add-to-cart-btn flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-bold transition-all shadow-[0_0_20px_-5px_#da71d7]">
                                     <span class="material-symbols-outlined">menu_book</span>
-                                    <span>Start Reading</span>
+                                    <span>Read Now</span>
                                 </button>
                                 <button class="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg font-bold backdrop-blur-sm transition-all">
-                                    <span class="material-symbols-outlined">bookmark_add</span>
-                                    <span>Save</span>
+                                    <a href="{{url('/book_summary/'.$top_book->id)}}">
+                                        <span class="material-symbols-outlined">bookmark_add</span>
+                                        <span>View Details</span>
+                                    </a>
                                 </button>
                             </div>
                         </div>
