@@ -36,11 +36,11 @@ class courseController extends Controller
             'access'          => 'required|in:free,premium',
             'price'           => 'required_if:access,premium|nullable|numeric|min:0',
             'discount'        => 'nullable|numeric|min:0|max:100',
-            'cover_image'     => 'required|image|mimes:jpeg,jpg,png|max:2048',
+            'cover_image'     => 'required|image|mimes:jpeg,jpg,png|max:10240',
             'lessons.*.title' => 'required|string|max:255',
             'lessons.*.description' => 'nullable|string',
-            'lessons.*.video' => 'nullable|file|mimes:mp4,mov,avi,wmv|max:102400',
-            'lessons.*.ppt'   => 'nullable|file|mimes:ppt,pptx,pdf|max:20480',
+            'lessons.*.video' => 'nullable|file|mimes:mp4,mov,avi,wmv|max:2097152',
+            'lessons.*.ppt'   => 'nullable|file|mimes:ppt,pptx,pdf|max:2097152',
         ]);
 
         // 2. Initialize Course Model

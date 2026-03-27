@@ -35,7 +35,7 @@ class booksController extends Controller
             'category'     => 'required|exists:book_categories,id',
             'author_id'  => 'required|exists:authors,id',
             'description'  => 'nullable|string',
-            'cover_image'  => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+            'cover_image'  => 'nullable|image|mimes:jpeg,jpg,png|max:10240',
             'sub_title'    => 'nullable|string|max:255',
             'isbn'         => 'nullable|string|max:20',
 
@@ -44,8 +44,8 @@ class booksController extends Controller
             'price'        => 'required_if:access,premium|nullable|numeric|min:0.01',
             'discount'     => 'nullable|numeric|min:0|max:100',
 
-            // File Validation (Updated to 50MB to match your UI)
-            'book_file'    => 'nullable|file|mimes:pdf,epub|max:51200',
+            // File Validation (Updated to 2GB to match your UI)
+            'book_file'    => 'nullable|file|mimes:pdf,epub|max:2097152',
         ]);
         $book = new BooksModel();
         $book->title = $request->book_name;
@@ -114,7 +114,7 @@ class booksController extends Controller
             'category'     => 'required|exists:book_categories,id',
             'author_id'  => 'required|exists:authors,id',
             'description'  => 'nullable|string',
-            'cover_image'  => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+            'cover_image'  => 'nullable|image|mimes:jpeg,jpg,png|max:10240',
             'sub_title'    => 'nullable|string|max:255',
             'isbn'         => 'nullable|string|max:20',
 
@@ -123,8 +123,8 @@ class booksController extends Controller
             'price'        => 'required_if:access,premium|nullable|numeric|min:0.01',
             'discount'     => 'nullable|numeric|min:0|max:100',
 
-            // File Validation (Updated to 50MB to match your UI)
-            'book_file'    => 'nullable|file|mimes:pdf,epub|max:51200',
+            // File Validation (Updated to 2GB)
+            'book_file'    => 'nullable|file|mimes:pdf,epub|max:2097152',
         ]);
         $book = BooksModel::find($id);
         $book->title = $request->book_name;
