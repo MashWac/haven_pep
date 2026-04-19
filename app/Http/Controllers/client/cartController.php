@@ -211,7 +211,7 @@ class cartController extends Controller
         // 3. Paid items via Bryceandy Pesapal
         $order = [
             'amount' => $total,
-            'currency' => 'KES', // or 'TZS', 'UGX', 'USD' - set your default
+            'currency' => 'USD', // or 'TZS', 'UGX', 'KES' - set your default
             'description' => 'Wellness Purchase: ' . count($cart) . ' items',
             'type' => 'MERCHANT',
             'first_name' => session('user_name'),

@@ -94,7 +94,7 @@
                                     <span class="item-name font-medium text-sm text-[#171511] dark:text-white">{{ $item->name }}</span>
                                     <span class="text-xs text-gray-400 ml-2">{{ $item->category_name }}</span>
                                 </div>
-                                <span class="text-sm font-semibold text-[#DA70D6] shrink-0">KES {{ number_format($item->price, 2) }}</span>
+                                <span class="text-sm font-semibold text-[#DA70D6] shrink-0">USD {{ number_format($item->price, 2) }}</span>
                             </label>
                             @endforeach
                         </div>
@@ -130,7 +130,7 @@
                         </h2>
                         <div class="flex flex-col gap-4">
                             <label class="flex flex-col gap-2">
-                                <span class="text-[#171511] dark:text-[#f8e8c9] text-sm font-medium">Combo Price (KES) <span class="text-[#DA70D6]">*</span></span>
+                                <span class="text-[#171511] dark:text-[#f8e8c9] text-sm font-medium">Combo Price (USD) <span class="text-[#DA70D6]">*</span></span>
                                 <input name="price" type="number" step="0.01" min="0" required value="{{ old('price') }}"
                                     class="form-input w-full rounded-lg border border-[#e5e2dc] bg-background-light dark:bg-[#362f22] dark:border-[#4a402e] dark:text-white h-11 px-4 text-sm focus:ring-2 focus:ring-[#DA70D6]/20 focus:border-[#DA70D6] outline-none transition-all"
                                     placeholder="e.g. 3500.00">

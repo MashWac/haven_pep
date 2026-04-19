@@ -73,9 +73,9 @@
                         {!!$instructor->about_me!!}
                     </p>
                     <div class="mt-6 flex flex-wrap gap-3">
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 dark:bg-white/5 text-neutral-600 dark:text-gray-300 border border-neutral-200 dark:border-white/10">Biblical Money Coaching</span>
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 dark:bg-white/5 text-neutral-600 dark:text-gray-300 border border-neutral-200 dark:border-white/10">Books</span>
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 dark:bg-white/5 text-neutral-600 dark:text-gray-300 border border-neutral-200 dark:border-white/10">Church Structures</span>
+                        @foreach($bubbles as $bubble)
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 dark:bg-white/5 text-neutral-600 dark:text-gray-300 border border-neutral-200 dark:border-white/10">{{$bubble->text}}</span>
+                        @endforeach 
                     </div>
                 </div>
             </div>
@@ -154,7 +154,7 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-between">
-                                    <span class="text-xl font-bold text-neutral-900 dark:text-white">@if($course->pricing > 0)KSH {{ $course->pricing}}@else Free @endif</span>
+                                    <span class="text-xl font-bold text-neutral-900 dark:text-white">@if($course->pricing > 0)USD {{ $course->pricing}}@else Free @endif</span>
                                     <a href="{{url('/course_details/'.$course->id)}}" class="text-sm font-bold bg-neutral-100 dark:bg-white/10 hover:bg-primary hover:text-background-dark text-neutral-900 dark:text-white px-4 py-2 rounded-lg transition-colors">
                                         Preview
                                     </a>
@@ -209,10 +209,10 @@
                                 <div class="mt-3 flex items-center justify-between">
                                     <div class="flex items-center gap-2">
                                         <span class="text-sm font-black text-primary">
-                                            @if($book->price > 0) KSH {{ number_format($book->price) }} @else Free @endif
+                                            @if($book->price > 0) USD {{ number_format($book->price) }} @else Free @endif
                                         </span>
                                         @if($book->discount)
-                                        <span class="text-xs text-gray-400 line-through">KSH {{ number_format($book->price + $book->discount) }}</span>
+                                        <span class="text-xs text-gray-400 line-through">USD {{ number_format($book->price + $book->discount) }}</span>
                                         @endif
                                     </div>
 

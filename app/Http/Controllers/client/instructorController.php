@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
+use App\Models\AboutMeBubbleModel;
 use App\Models\AchievementsModel;
 use App\Models\BooksModel;
 use App\Models\coursesModel;
@@ -13,10 +14,11 @@ class instructorController extends Controller
 {
     public function index()
     {
-        $instructor= InstructorModel::first();
+        $instructor = InstructorModel::first();
         $achievements = AchievementsModel::where('instructor_id', $instructor->id)->get();
-        $courses=coursesModel::all();
-        $books=BooksModel::join('authors','books.author','=','authors.id')->join('book_categories','books.category_id','=','book_categories.id')->select('books.*','authors.full_name as author')->get();
-        return view('client.instructor',compact('instructor','achievements','courses','books'));
+        $courses = coursesModel::all();
+        $bubbles = AboutMeBubbleModel::orderBy('rank_position', 'asc')->get();
+        $books = BooksModel::join('authors', 'books.author', '=', 'authors.id')->join('book_categories', 'books.category_id', '=', 'book_categories.id')->select('books.*', 'authors.full_name as author')->get();
+        return view('client.instructor', compact('instructor', 'achievements', 'courses', 'books', 'bubbles'));
     }
 }

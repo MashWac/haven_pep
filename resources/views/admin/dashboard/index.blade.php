@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div>
-                    <p class="text-2xl font-bold tracking-tight text-[#171511] dark:text-white">KES{{$total_sales}}</p>
+                    <p class="text-2xl font-bold tracking-tight text-[#171511] dark:text-white">USD{{$total_sales}}</p>
                     <!-- <div class="flex items-center gap-1 mt-1 text-tertiary">
                                 <span class="material-symbols-outlined text-[16px]">trending_up</span>
                                 <span class="text-xs font-bold">+12% from last month</span>
@@ -80,48 +80,19 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
             <!-- Main Line Chart -->
             <div class="lg:col-span-2 rounded-xl bg-white dark:bg-surface-dark shadow-sm border border-transparent dark:border-neutral-700 p-6">
-                <div class="flex justify-between items-center mb-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                     <div>
-                        <h3 class="text-lg font-bold text-[#171511] dark:text-white">Revenue Growth</h3>
-                        <p class="text-sm text-gray-500">Income over the last 30 days</p>
+                        <h3 class="text-lg font-bold text-[#171511] dark:text-white">Visitor Activity</h3>
+                        <p class="text-sm text-gray-500">Unique visitors per period</p>
                     </div>
-                    <div class="flex gap-2">
-                        <div class="flex items-center gap-1.5">
-                            <span class="w-3 h-3 rounded-full bg-secondary"></span>
-                            <span class="text-xs font-medium text-gray-600 dark:text-gray-300">Courses</span>
-                        </div>
-                        <div class="flex items-center gap-1.5">
-                            <span class="w-3 h-3 rounded-full bg-tertiary"></span>
-                            <span class="text-xs font-medium text-gray-600 dark:text-gray-300">Subs</span>
-                        </div>
+                    <div class="flex bg-gray-100 dark:bg-neutral-800 p-1 rounded-lg">
+                        <button onclick="updateChart('daily', this)" class="visitor-filter-btn px-4 py-1.5 text-xs font-bold rounded-md transition-all bg-white dark:bg-neutral-700 shadow-sm text-secondary">Daily</button>
+                        <button onclick="updateChart('weekly', this)" class="visitor-filter-btn px-4 py-1.5 text-xs font-bold rounded-md transition-all text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">Weekly</button>
+                        <button onclick="updateChart('monthly', this)" class="visitor-filter-btn px-4 py-1.5 text-xs font-bold rounded-md transition-all text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">Monthly</button>
                     </div>
                 </div>
                 <div class="relative w-full aspect-[2/1] min-h-[250px]">
-                    <!-- SVG Chart -->
-                    <svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 400 150">
-                        <!-- Grid Lines -->
-                        <line stroke="#f0f0f0" stroke-width="1" x1="0" x2="400" y1="150" y2="150"></line>
-                        <line stroke="#f0f0f0" stroke-dasharray="4" stroke-width="1" x1="0" x2="400" y1="100" y2="100"></line>
-                        <line stroke="#f0f0f0" stroke-dasharray="4" stroke-width="1" x1="0" x2="400" y1="50" y2="50"></line>
-                        <line stroke="#f0f0f0" stroke-dasharray="4" stroke-width="1" x1="0" x2="400" y1="0" y2="0"></line>
-                        <!-- Area Fill (Gradient) -->
-                        <defs>
-                            <lineargradient id="gradientSecondary" x1="0" x2="0" y1="0" y2="1">
-                                <stop offset="0%" stop-color="#DA70D6" stop-opacity="0.15"></stop>
-                                <stop offset="100%" stop-color="#DA70D6" stop-opacity="0"></stop>
-                            </lineargradient>
-                        </defs>
-                        <!-- Line 1: Secondary Color (#DA70D6) -->
-                        <path d="M0 120 C 50 120, 50 60, 100 60 S 150 90, 200 80 S 250 40, 300 50 S 350 20, 400 30" fill="none" stroke="#DA70D6" stroke-linecap="round" stroke-width="3" vector-effect="non-scaling-stroke"></path>
-                        <!-- Line 2: Tertiary Color (#40B5AD) -->
-                        <path d="M0 140 C 50 130, 80 110, 120 115 S 180 130, 220 100 S 280 90, 320 85 S 380 60, 400 70" fill="none" stroke="#40B5AD" stroke-dasharray="6 4" stroke-linecap="round" stroke-width="3" vector-effect="non-scaling-stroke"></path>
-                    </svg>
-                </div>
-                <div class="flex justify-between mt-4 text-xs font-bold text-gray-400 uppercase tracking-wide">
-                    <span>Week 1</span>
-                    <span>Week 2</span>
-                    <span>Week 3</span>
-                    <span>Week 4</span>
+                    <canvas id="visitorChart"></canvas>
                 </div>
             </div>
             <!-- Donut/Bar Chart Sidebar -->
@@ -209,4 +180,92 @@
 </main>
 @endsection
 @section('scripts')
-@endsection
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    let visitorChart;
+
+    function initChart(labels, data) {
+        const ctx = document.getElementById('visitorChart').getContext('2d');
+        
+        if (visitorChart) {
+            visitorChart.destroy();
+        }
+
+        visitorChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Visitors',
+                    data: data,
+                    borderColor: '#DA70D6',
+                    backgroundColor: 'rgba(218, 112, 214, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#DA70D6',
+                    pointBorderColor: '#fff',
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        backgroundColor: '#1a160e',
+                        titleFont: { family: 'Manrope', size: 13 },
+                        bodyFont: { family: 'Manrope', size: 12 },
+                        padding: 12,
+                        cornerRadius: 8
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(0,0,0,0.05)', drawBorder: false },
+                        ticks: { font: { family: 'Manrope', size: 11 }, color: '#877b64', stepSize: 1 }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { family: 'Manrope', size: 11 }, color: '#877b64' }
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                }
+            }
+        });
+    }
+
+    async function updateChart(filter, btnElement) {
+        document.querySelectorAll('.visitor-filter-btn').forEach(btn => {
+            btn.classList.remove('bg-white', 'dark:bg-neutral-700', 'shadow-sm', 'text-secondary');
+            btn.classList.add('text-gray-500', 'hover:text-gray-700', 'dark:hover:text-gray-300');
+        });
+        
+        if (btnElement) {
+            btnElement.classList.remove('text-gray-500', 'hover:text-gray-700', 'dark:hover:text-gray-300');
+            btnElement.classList.add('bg-white', 'dark:bg-neutral-700', 'shadow-sm', 'text-secondary');
+        }
+
+        try {
+            const response = await fetch(`{{ url('/admin_visitor_stats') }}?filter=${filter}`);
+            const data = await response.json();
+            initChart(data.labels, data.data);
+        } catch (error) {
+            console.error('Error fetching visitor stats:', error);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        updateChart('daily');
+    });
+</script>
+@endsection

@@ -71,10 +71,10 @@
                         @endif
                         <div class="flex items-center justify-between">
                             <div>
-                                <span class="text-2xl font-black text-gray-900 dark:text-white">KES {{ number_format($combo->price, 2) }}</span>
+                                <span class="text-2xl font-black text-gray-900 dark:text-white">USD {{ number_format($combo->price, 2) }}</span>
                                 @if($combo->discount_percentage > 0)
                                 @php $original = $combo->price / (1 - $combo->discount_percentage / 100); @endphp
-                                <span class="ml-2 text-sm line-through text-gray-400">KES {{ number_format($original, 0) }}</span>
+                                <span class="ml-2 text-sm line-through text-gray-400">USD {{ number_format($original, 0) }}</span>
                                 @endif
                             </div>
                             <button data-id="{{ $combo->id }}" data-type="combo"
@@ -138,16 +138,16 @@
                     <h3 class="text-gray-900 dark:text-white text-xs font-bold uppercase tracking-wider mb-3">Max Price</h3>
                     <div class="flex flex-col gap-3">
                         <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                            <span>KES 0</span>
+                            <span>USD 0</span>
                             <span id="price-display" class="font-bold text-primary">
-                                KES {{ number_format($maxPrice ?? $maxProductPrice, 0) }}
+                                USD {{ number_format($maxPrice ?? $maxProductPrice, 0) }}
                             </span>
                         </div>
                         <input type="range" name="max_price" id="price-range"
                             min="0" max="{{ $maxProductPrice }}" step="100"
                             value="{{ $maxPrice ?? $maxProductPrice }}"
                             class="w-full cursor-pointer"
-                            oninput="document.getElementById('price-display').textContent = 'KES ' + parseInt(this.value).toLocaleString()">
+                            oninput="document.getElementById('price-display').textContent = 'USD ' + parseInt(this.value).toLocaleString()">
                         <button type="submit"
                             class="w-full py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-white text-sm font-bold transition-all shadow-sm hover:shadow-primary/30">
                             Apply Filters
@@ -213,11 +213,11 @@
                     </div>
                     <div>
                         <p class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
-                            Max Price: <span class="text-primary" id="mobile-price-display">KES {{ number_format($maxPrice ?? $maxProductPrice, 0) }}</span>
+                            Max Price: <span class="text-primary" id="mobile-price-display">USD {{ number_format($maxPrice ?? $maxProductPrice, 0) }}</span>
                         </p>
                         <input type="range" name="max_price" min="0" max="{{ $maxProductPrice }}" step="100"
                             value="{{ $maxPrice ?? $maxProductPrice }}"
-                            oninput="document.getElementById('mobile-price-display').textContent='KES '+parseInt(this.value).toLocaleString()"
+                            oninput="document.getElementById('mobile-price-display').textContent='USD '+parseInt(this.value).toLocaleString()"
                             class="w-full cursor-pointer">
                     </div>
                     <button type="submit" class="w-full py-2 rounded-xl bg-primary text-white text-sm font-bold">Apply</button>
@@ -245,7 +245,7 @@
                 @if($maxPrice && $maxPrice < $maxProductPrice)
                 <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-100 dark:bg-surface-dark text-gray-600 dark:text-gray-300 text-xs font-medium">
                     <span class="material-symbols-outlined text-[14px]">payments</span>
-                    Up to KES {{ number_format($maxPrice, 0) }}
+                    Up to USD {{ number_format($maxPrice, 0) }}
                     <a href="{{ url('/shop') }}?{{ http_build_query(array_filter(['search'=>$search,'category'=>$selectedCategory])) }}" class="ml-1 hover:text-red-400">✕</a>
                 </span>
                 @endif
@@ -311,11 +311,11 @@
                             <div class="flex items-center justify-between mt-2">
                                 <div>
                                     <span class="text-base font-black text-gray-900 dark:text-white">
-                                        KES {{ number_format($product->price, 0) }}
+                                        USD {{ number_format($product->price, 0) }}
                                     </span>
                                     @if($product->discount_percentage > 0)
                                     @php $origPrice = $product->price / (1 - $product->discount_percentage / 100); @endphp
-                                    <span class="block text-[10px] line-through text-gray-400">KES {{ number_format($origPrice, 0) }}</span>
+                                    <span class="block text-[10px] line-through text-gray-400">USD {{ number_format($origPrice, 0) }}</span>
                                     @endif
                                 </div>
                                 <button data-id="{{ $product->id }}" data-type="shop_item"

@@ -52,8 +52,8 @@
                 <td>{{$item->display_name?? 'Product ID: '.$item->item_id }}</td>
                 <td>{{$item->item_type}}</td>
                 <td style="text-align: center;">{{ $item->quantity }}</td>
-                <td style="text-align: right;">KES{{ number_format($item->price, 2) }}</td>
-                <td style="text-align: right;">KES{{ number_format($item->price * $item->quantity, 2) }}</td>
+                <td style="text-align: right;">USD{{ number_format($item->price, 2) }}</td>
+                <td style="text-align: right;">USD{{ number_format($item->price * $item->quantity, 2) }}</td>
             </tr>
             @endforeach
         </tbody>

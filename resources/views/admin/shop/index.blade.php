@@ -96,7 +96,7 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 font-semibold text-[#171511] dark:text-white">
-                                    KES {{ number_format($product->price, 2) }}
+                                    USD {{ number_format($product->price, 2) }}
                                 </td>
                                 <td class="px-6 py-4">
                                     @if($product->discount_percentage > 0)

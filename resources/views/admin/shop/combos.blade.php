@@ -71,7 +71,7 @@
                         @endif
 
                         <div class="flex items-center justify-between">
-                            <span class="text-xl font-black text-[#171511] dark:text-white">KES {{ number_format($combo->price, 2) }}</span>
+                            <span class="text-xl font-black text-[#171511] dark:text-white">USD {{ number_format($combo->price, 2) }}</span>
                             <div class="flex items-center gap-1">
                                 <a href="{{ url('/admin_shop_combos/edit/'.$combo->id) }}" class="p-1.5 text-gray-400 hover:text-brand-orchid hover:bg-brand-orchid/10 rounded-md transition-colors" title="Edit">
                                     <span class="material-symbols-outlined text-lg">edit</span>

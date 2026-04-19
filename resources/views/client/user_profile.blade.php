@@ -154,7 +154,7 @@
                                         <h5 class="text-white font-bold text-sm leading-tight line-clamp-2 mt-0.5">{{ $item->shopItem?->name ?? 'Unknown Item' }}</h5>
                                         <p class="text-xs text-[#b5a1b4] mt-1">Purchased {{ $item->created_at->format('M d, Y') }}</p>
                                     </div>
-                                    <span class="text-xs font-bold text-secondary mt-2">KES {{ number_format($item->price, 2) }}</span>
+                                    <span class="text-xs font-bold text-secondary mt-2">USD {{ number_format($item->price, 2) }}</span>
                                 </div>
                             </div>
                             @endforeach
@@ -184,7 +184,7 @@
                                     <h5 class="text-white font-bold text-sm leading-tight mt-0.5">{{ $item->combo?->name ?? 'Unknown Combo' }}</h5>
                                     <div class="flex items-center justify-between mt-2">
                                         <span class="text-xs text-[#b5a1b4]">{{ $item->created_at->format('M d, Y') }}</span>
-                                        <span class="text-xs font-bold text-secondary">KES {{ number_format($item->price, 2) }}</span>
+                                        <span class="text-xs font-bold text-secondary">USD {{ number_format($item->price, 2) }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -240,7 +240,7 @@
                                         </td>
                                         <td class="px-6 py-4 text-sm text-[#b5a1b4]">{{ $order->created_at->format('M d, Y') }}</td>
                                         <td class="px-6 py-4 text-sm text-[#b5a1b4]">{{ $order->number_of_items }} item{{ $order->number_of_items != 1 ? 's' : '' }}</td>
-                                        <td class="px-6 py-4 font-bold text-white">KES {{ number_format($order->total_price, 2) }}</td>
+                                        <td class="px-6 py-4 font-bold text-white">USD {{ number_format($order->total_price, 2) }}</td>
                                         <td class="px-6 py-4">
                                             <span class="px-2 py-1 rounded text-[10px] font-bold uppercase {{ $order->status_payment === 'Completed' ? 'bg-green-400/10 text-green-400' : 'bg-yellow-400/10 text-yellow-400' }}">
                                                 {{ $order->status_payment }}
