@@ -131,11 +131,72 @@
                         </div>
                     </section>
 
+                    {{-- ── My Shop Items ──────────────────────────────────── --}}
+                    @if($myShopItems->count())
+                    <section class="space-y-4">
+                        <h3 class="text-2xl font-bold flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">shopping_bag</span> My Shop Items
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                            @foreach($myShopItems as $item)
+                            <div class="bg-surface-dark border border-border-dark rounded-xl p-4 flex gap-4 hover:border-primary/50 transition-all group">
+                                @if($item->shopItem?->image)
+                                <div class="w-20 h-20 bg-cover bg-center rounded-lg shrink-0 shadow-md group-hover:scale-105 transition-transform"
+                                    style="background-image: url('{{ asset($item->shopItem->image) }}')"></div>
+                                @else
+                                <div class="w-20 h-20 bg-primary/10 rounded-lg shrink-0 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary text-3xl">shopping_bag</span>
+                                </div>
+                                @endif
+                                <div class="flex flex-col justify-between py-1 min-w-0">
+                                    <div>
+                                        <span class="text-[10px] font-bold uppercase text-primary tracking-wider">Shop Item</span>
+                                        <h5 class="text-white font-bold text-sm leading-tight line-clamp-2 mt-0.5">{{ $item->shopItem?->name ?? 'Unknown Item' }}</h5>
+                                        <p class="text-xs text-[#b5a1b4] mt-1">Purchased {{ $item->created_at->format('M d, Y') }}</p>
+                                    </div>
+                                    <span class="text-xs font-bold text-secondary mt-2">KES {{ number_format($item->price, 2) }}</span>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </section>
+                    @endif
+
+                    {{-- ── My Combos ───────────────────────────────────────── --}}
+                    @if($myCombos->count())
+                    <section class="space-y-4">
+                        <h3 class="text-2xl font-bold flex items-center gap-2">
+                            <span class="material-symbols-outlined text-green-400">redeem</span> My Combo Deals
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                            @foreach($myCombos as $item)
+                            <div class="bg-surface-dark border border-border-dark rounded-xl overflow-hidden hover:border-green-400/40 transition-all group">
+                                @if($item->combo?->image)
+                                <div class="h-32 bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
+                                    style="background-image: url('{{ asset($item->combo->image) }}')"></div>
+                                @else
+                                <div class="h-32 bg-gradient-to-br from-green-400/20 to-primary/20 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-green-400 text-5xl">redeem</span>
+                                </div>
+                                @endif
+                                <div class="p-4">
+                                    <span class="text-[10px] font-bold uppercase text-green-400 tracking-wider">Combo Deal</span>
+                                    <h5 class="text-white font-bold text-sm leading-tight mt-0.5">{{ $item->combo?->name ?? 'Unknown Combo' }}</h5>
+                                    <div class="flex items-center justify-between mt-2">
+                                        <span class="text-xs text-[#b5a1b4]">{{ $item->created_at->format('M d, Y') }}</span>
+                                        <span class="text-xs font-bold text-secondary">KES {{ number_format($item->price, 2) }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </section>
+                    @endif
+
                     <section>
                         <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
                             <span class="material-symbols-outlined text-red-400">favorite</span> Wishlist
                         </h3>
-
                     </section>
                 </div>
 
@@ -162,11 +223,24 @@
                                 </thead>
                                 <tbody class="divide-y divide-border-dark/50">
                                     @forelse($orders as $order)
+                                    @php
+                                        // Determine dominant item type for this order's badge
+                                        $orderTypes = $order->details?->pluck('item_type')->unique()->values() ?? collect();
+                                        $hasShop    = $orderTypes->contains(fn($t) => in_array($t, ['shop_item','combo']));
+                                        $hasDigital = $orderTypes->contains(fn($t) => in_array($t, ['book','course']));
+                                    @endphp
                                     <tr class="hover:bg-white/[0.02] transition-colors group">
-                                        <td class="px-6 py-4 font-mono text-sm text-white">{{ $order->receipt_number }}</td>
+                                        <td class="px-6 py-4 font-mono text-sm text-white">
+                                            {{ $order->receipt_number }}
+                                            @if($hasShop && $hasDigital)
+                                                <span class="ml-1 text-[9px] font-bold bg-primary/10 text-primary px-1.5 py-0.5 rounded uppercase">Mixed</span>
+                                            @elseif($hasShop)
+                                                <span class="ml-1 text-[9px] font-bold bg-green-400/10 text-green-400 px-1.5 py-0.5 rounded uppercase">Shop</span>
+                                            @endif
+                                        </td>
                                         <td class="px-6 py-4 text-sm text-[#b5a1b4]">{{ $order->created_at->format('M d, Y') }}</td>
-                                        <td class="px-6 py-4 text-sm text-[#b5a1b4]">{{ $order->number_of_items }} items</td>
-                                        <td class="px-6 py-4 font-bold text-white">${{ number_format($order->total_price, 2) }}</td>
+                                        <td class="px-6 py-4 text-sm text-[#b5a1b4]">{{ $order->number_of_items }} item{{ $order->number_of_items != 1 ? 's' : '' }}</td>
+                                        <td class="px-6 py-4 font-bold text-white">KES {{ number_format($order->total_price, 2) }}</td>
                                         <td class="px-6 py-4">
                                             <span class="px-2 py-1 rounded text-[10px] font-bold uppercase {{ $order->status_payment === 'Completed' ? 'bg-green-400/10 text-green-400' : 'bg-yellow-400/10 text-yellow-400' }}">
                                                 {{ $order->status_payment }}

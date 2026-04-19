@@ -4,9 +4,11 @@ namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
 use App\Models\BooksModel;
+use App\Models\CombosModel;
 use App\Models\coursesModel;
 use App\Models\salesDetailsModel;
 use App\Models\salesModel;
+use App\Models\ShopItemsModel;
 use Bryceandy\Laravel_Pesapal\Facades\Pesapal;
 use Bryceandy\Laravel_Pesapal\Payment;
 use Illuminate\Http\Request;
@@ -38,33 +40,124 @@ class cartController extends Controller
     {
         $cart = session()->get('cart', []);
         $id = $request->id;
-        $type = $request->type;
+        $type = $request->type; // 'book' | 'course' | 'shop_item' | 'combo'
         $cartKey = $type . '_' . $id;
 
         if (isset($cart[$cartKey])) {
+            // Already in cart — just increment quantity
             $cart[$cartKey]['quantity']++;
         } else {
-            $item = ($type == 'book') ? BooksModel::find($id) : coursesModel::find($id);
+            // ── Resolve item data by type ──────────────────────────────────────
+            if ($type === 'shop_item') {
+                $item = ShopItemsModel::find($id);
+                if (!$item) {
+                    return $this->cartResponse($request, false, 'Shop item not found.');
+                }
+                $originalPrice = (float) $item->price;
+                $discountValue = (float) ($item->discount_percentage ?? 0);
+                $finalPrice = $originalPrice * ((100 - $discountValue) / 100);
 
-            $originalPrice = $item->pricing;
-            $discountValue = $item->discount ?? 0;
-            $finalPrice = $originalPrice * ((100 - $discountValue) / 100);
+                $cart[$cartKey] = [
+                    'id' => $id,
+                    'name' => $item->name,
+                    'quantity' => 1,
+                    'original_price' => $originalPrice,
+                    'discount' => $discountValue,
+                    'price' => $finalPrice,
+                    'image' => $item->image ? asset($item->image) : null,
+                    'type' => $type,
+                    'meta' => 'Shop Item',
+                ];
 
-            $cart[$cartKey] = [
-                "id" => $id,
-                "name" => $type == 'book' ? $item->book_name : $item->course_name,
-                "quantity" => 1,
-                "original_price" => $originalPrice, // Store original
-                "discount" => $discountValue,       // Store discount
-                "price" => $finalPrice,             // Store final price
-                "image" => $type == 'book' ? $item->image : $item->cover_image,
-                "type" => $type,
-                "meta" => $type == 'book' ? $item->author : $item->course_duration . ' ' . $item->duration_unit
-            ];
+            } elseif ($type === 'combo') {
+                $item = CombosModel::find($id);
+                if (!$item) {
+                    return $this->cartResponse($request, false, 'Combo not found.');
+                }
+                $originalPrice = (float) $item->price;
+                $discountValue = (float) ($item->discount_percentage ?? 0);
+                $finalPrice = $originalPrice * ((100 - $discountValue) / 100);
+                $itemCount = count(json_decode($item->items_included ?? '[]', true));
+
+                $cart[$cartKey] = [
+                    'id' => $id,
+                    'name' => $item->name,
+                    'quantity' => 1,
+                    'original_price' => $originalPrice,
+                    'discount' => $discountValue,
+                    'price' => $finalPrice,
+                    'image' => $item->image ? asset($item->image) : null,
+                    'type' => $type,
+                    'meta' => $itemCount . ' item' . ($itemCount !== 1 ? 's' : '') . ' bundled',
+                ];
+
+            } elseif ($type === 'book') {
+                $item = BooksModel::find($id);
+                if (!$item) {
+                    return $this->cartResponse($request, false, 'Book not found.');
+                }
+                $originalPrice = (float) $item->pricing;
+                $discountValue = (float) ($item->discount ?? 0);
+                $finalPrice = $originalPrice * ((100 - $discountValue) / 100);
+
+                $cart[$cartKey] = [
+                    'id' => $id,
+                    'name' => $item->book_name,
+                    'quantity' => 1,
+                    'original_price' => $originalPrice,
+                    'discount' => $discountValue,
+                    'price' => $finalPrice,
+                    'image' => $item->image,
+                    'type' => $type,
+                    'meta' => $item->author,
+                ];
+
+            } else {
+                // Defaults to 'course'
+                $item = coursesModel::find($id);
+                if (!$item) {
+                    return $this->cartResponse($request, false, 'Course not found.');
+                }
+                $originalPrice = (float) $item->pricing;
+                $discountValue = (float) ($item->discount ?? 0);
+                $finalPrice = $originalPrice * ((100 - $discountValue) / 100);
+
+                $cart[$cartKey] = [
+                    'id' => $id,
+                    'name' => $item->course_name,
+                    'quantity' => 1,
+                    'original_price' => $originalPrice,
+                    'discount' => $discountValue,
+                    'price' => $finalPrice,
+                    'image' => $item->cover_image,
+                    'type' => $type,
+                    'meta' => $item->course_duration . ' ' . $item->duration_unit,
+                ];
+            }
         }
 
         session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Item added to cart!');
+
+        return $this->cartResponse($request, true, 'Item added to cart!', count($cart));
+    }
+
+    /**
+     * Return either a JSON response (AJAX) or a redirect (full-page form submit).
+     */
+    private function cartResponse(Request $request, bool $success, string $message, int $cartCount = 0)
+    {
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => $success,
+                'message' => $message,
+                'cart_count' => $cartCount,
+            ], $success ? 200 : 422);
+        }
+
+        if ($success) {
+            return redirect()->back()->with('success', $message);
+        }
+        return redirect()->back()->with('error', $message);
     }
 
     public function update(Request $request)
@@ -228,24 +321,26 @@ class cartController extends Controller
     {
 
         $transaction = Pesapal::getTransactionDetails(
-            request('pesapal_merchant_reference'), request('pesapal_transaction_tracking_id'));
+            request('pesapal_merchant_reference'),
+            request('pesapal_transaction_tracking_id')
+        );
 
         Log::info('transaction status from pesapal', $transaction);
-        if($transaction['status']!='FAILED'){
+        if ($transaction['status'] != 'FAILED') {
             $payment = Payment::whereReference(request('pesapal_merchant_reference'))->first();
-            $payment_id=$payment->id;
-            $tracking_id=$payment->tracking_id;
+            $payment_id = $payment->id;
+            $tracking_id = $payment->tracking_id;
 
             $cart = session()->get('cart', []);
 
 
             // Check if cart is empty (session might have expired)
             if (empty($cart)) {
-                return redirect()->to('/')->with('error', 'Your session expired. Please contact support with Ref: ' .$tracking_id);
+                return redirect()->to('/')->with('error', 'Your session expired. Please contact support with Ref: ' . $tracking_id);
             }
             $user = [
-                'user_id'    => session('user_id'),
-                'user_name'  => session('user_name'),
+                'user_id' => session('user_id'),
+                'user_name' => session('user_name'),
                 'user_email' => session('user_email'),
                 'user_phone' => session('user_phone')
             ];
@@ -255,37 +350,37 @@ class cartController extends Controller
             $payment_method = "Pesapal";
 
             // Call the processing function and return its redirect
-            return $this->processPremiumSale($cart, $user, $tracking_id, $total_price, $payment_method,$payment_id);
+            return $this->processPremiumSale($cart, $user, $tracking_id, $total_price, $payment_method, $payment_id);
         }
 
         return redirect()->to('/cart')->with('error', 'Payment failed or was cancelled.');
     }
-    private function processPremiumSale($cart, $user, $transactionId, $price, $payment_method,$payment_id)
+    private function processPremiumSale($cart, $user, $transactionId, $price, $payment_method, $payment_id)
     {
         DB::beginTransaction();
         try {
             $sale = salesModel::create([
-                'number_of_items'       => count($cart),
-                'user_id'               => $user['user_id'], // Accessed as array key
-                'payment_method'        => $payment_method,
-                'receipt_number'        => 'REC-' . strtoupper(uniqid()),
+                'number_of_items' => count($cart),
+                'user_id' => $user['user_id'], // Accessed as array key
+                'payment_method' => $payment_method,
+                'receipt_number' => 'REC-' . strtoupper(uniqid()),
                 'transaction_reference' => $transactionId,
-                'total_price'           => $price,
-                'status_payment'        => 'Completed',
-                'delivery_method'       => 'online',
-                'delivery_status'       => 'delivered',
-                'payment_id'            => $payment_id,
-                'status'                => 0
+                'total_price' => $price,
+                'status_payment' => 'Completed',
+                'delivery_method' => 'online',
+                'delivery_status' => 'delivered',
+                'payment_id' => $payment_id,
+                'status' => 0
             ]);
 
             foreach ($cart as $item) {
                 salesDetailsModel::create([
-                    'sale_id'   => $sale->id,
-                    'item_id'   => $item['id'],
+                    'sale_id' => $sale->id,
+                    'item_id' => $item['id'],
                     'item_type' => $item['type'],
-                    'quantity'  => $item['quantity'],
-                    'price'     => $item['price'],
-                    'status'    => 0
+                    'quantity' => $item['quantity'],
+                    'price' => $item['price'],
+                    'status' => 0
                 ]);
             }
 

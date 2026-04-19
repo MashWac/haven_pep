@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
+use App\Models\CombosModel;
 use App\Models\courseMaterialsModel;
 use App\Models\courseProgressModel;
 use App\Models\coursesModel;
@@ -10,6 +11,7 @@ use App\Models\InstructorModel;
 use App\Models\LessonsModel;
 use App\Models\salesDetailsModel;
 use App\Models\salesModel;
+use App\Models\ShopItemsModel;
 use App\Models\userDetailsModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -19,43 +21,52 @@ class userController extends Controller
 {
     public function myProfile()
     {
-        $user_id = session('user_id');
+        $user_id  = session('user_id');
         $user_data = userDetailsModel::where('id', $user_id)->first();
-        $orders = salesModel::where('user_id', $user_id)->get();
-        $purchases = salesDetailsModel::whereHas('sale', function ($query) use ($user_id) {
-            $query->where('user_id', $user_id);
-        })
-            ->with(['book', 'course'])
+        $orders   = salesModel::where('user_id', $user_id)->latest()->get();
+
+        // All purchase detail lines for this user, with every possible relation loaded
+        $purchases = salesDetailsModel::whereHas('sale', function ($q) use ($user_id) {
+                $q->where('user_id', $user_id);
+            })
+            ->with(['book', 'course', 'shopItem', 'combo'])
             ->get();
 
-        $myBooks = $purchases->where('item_type', 'book');
-        $myCourses = $purchases->where('item_type', 'course');
-        return view('client.user_profile', compact('user_data', 'orders', 'myBooks', 'myCourses'));
+        $myBooks     = $purchases->where('item_type', 'book');
+        $myCourses   = $purchases->where('item_type', 'course');
+        $myShopItems = $purchases->where('item_type', 'shop_item');
+        $myCombos    = $purchases->where('item_type', 'combo');
+
+        return view('client.user_profile', compact(
+            'user_data',
+            'orders',
+            'myBooks',
+            'myCourses',
+            'myShopItems',
+            'myCombos'
+        ));
     }
     public function downloadReceipt($id)
     {
-        $order = salesModel::join('sales_details', 'sales_details.sale_id', 'sales.id')->where('user_id', session('user_id'))->findOrFail($id);
+        $order = salesModel::join('sales_details', 'sales_details.sale_id', 'sales.id')
+            ->where('user_id', session('user_id'))
+            ->findOrFail($id);
 
         $order_details = salesDetailsModel::where('sale_id', $id)
-            ->with(['book', 'course']) // Eager load both
+            ->with(['book', 'course', 'shopItem', 'combo'])
             ->get()
             ->map(function ($detail) {
-                // Dynamically assign the name based on the type
-                if ($detail->item_type === 'book') {
-                    $detail->display_name = $detail->book->title ?? 'Unknown Book';
-                } elseif ($detail->item_type === 'course') {
-                    $detail->display_name = $detail->course->course_name ?? 'Unknown Course';
-                } else {
-                    $detail->display_name = "Item #{$detail->item_id}";
-                }
+                $detail->display_name = match ($detail->item_type) {
+                    'book'      => $detail->book?->title       ?? 'Unknown Book',
+                    'course'    => $detail->course?->course_name ?? 'Unknown Course',
+                    'shop_item' => $detail->shopItem?->name     ?? 'Unknown Shop Item',
+                    'combo'     => $detail->combo?->name        ?? 'Unknown Combo',
+                    default     => "Item #{$detail->item_id}",
+                };
                 return $detail;
             });
 
-
-
-        // This points to a simple blade file formatted as a receipt
         $pdf = Pdf::loadView('pdf.receipt', compact('order', 'order_details'));
-
         return $pdf->download('Receipt-' . $order->receipt_number . '.pdf');
     }
     public function progressWithCourse(Request $request, $id)

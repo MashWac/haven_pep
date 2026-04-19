@@ -27,6 +27,17 @@ class salesDetailsModel extends Model
     {
         return $this->belongsTo(coursesModel::class, 'item_id');
     }
+
+    public function shopItem()
+    {
+        return $this->belongsTo(ShopItemsModel::class, 'item_id');
+    }
+
+    public function combo()
+    {
+        return $this->belongsTo(CombosModel::class, 'item_id');
+    }
+
     public function sale()
     {
         return $this->belongsTo(salesModel::class, 'sale_id', 'id');

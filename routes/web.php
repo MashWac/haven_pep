@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\courseController;
 use App\Http\Controllers\admin\dashboardController;
 use App\Http\Controllers\admin\myProfileController;
 use App\Http\Controllers\admin\salesController;
+use App\Http\Controllers\Admin\ShopController;
 use App\Http\Controllers\admin\SystemSettingsController;
 use App\Http\Controllers\admin\usersController;
 use App\Http\Controllers\auth\AuthenticationController;
@@ -13,10 +14,12 @@ use App\Http\Controllers\client\booksController;
 use App\Http\Controllers\client\cartController;
 use App\Http\Controllers\client\coursesController;
 use App\Http\Controllers\client\instructorController;
+use App\Http\Controllers\client\ShopController as ClientShopController;
 use App\Http\Controllers\client\userController;
 use Bryceandy\Laravel_Pesapal\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 use Termwind\Components\Raw;
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -30,6 +33,7 @@ Route::get('/book_summary/{id}', [booksController::class, 'bookSummary']);
 Route::get('/courses', [coursesController::class, 'index']);
 Route::get('/course_details/{id}',[coursesController::class,'courseDetails']);
 
+Route::get('/shop', [ClientShopController::class, 'index'])->name('client.shop');
 
 
 Route::get('/login', [AuthenticationController::class, 'login']); 
@@ -124,7 +128,33 @@ Route::delete('/admin_authors/delete/{id}', [adminAuthorsController::class, 'del
 
 
 
+
+
 Route::get('admin_settings',[SystemSettingsController::class,'index']);
 Route::put('admin_settings/update',[SystemSettingsController::class,'update']);
+
+// ── Shop Items ────────────────────────────────────────────────────────────────
+Route::get('/admin_shop',                    [ShopController::class, 'index'])->name('admin.shop.index');
+Route::get('/admin_shop/add',                [ShopController::class, 'add'])->name('admin.shop.add');
+Route::post('/admin_shop/insert',            [ShopController::class, 'insert'])->name('admin.shop.insert');
+Route::get('/admin_shop/edit/{id}',          [ShopController::class, 'edit'])->name('admin.shop.edit');
+Route::put('/admin_shop/update/{id}',        [ShopController::class, 'update'])->name('admin.shop.update');
+Route::delete('/admin_shop/delete/{id}',     [ShopController::class, 'delete'])->name('admin.shop.delete');
+
+// ── Shop Categories ───────────────────────────────────────────────────────────
+Route::get('/admin_shop_categories',                    [ShopController::class, 'shopCategories'])->name('admin.shop.categories');
+Route::get('/admin_shop_categories/add',                [ShopController::class, 'addCategory'])->name('admin.shop.categories.add');
+Route::post('/admin_shop_categories/insert',            [ShopController::class, 'insertCategory'])->name('admin.shop.categories.insert');
+Route::get('/admin_shop_categories/edit/{id}',          [ShopController::class, 'editCategory'])->name('admin.shop.categories.edit');
+Route::put('/admin_shop_categories/update/{id}',        [ShopController::class, 'updateCategory'])->name('admin.shop.categories.update');
+Route::delete('/admin_shop_categories/delete/{id}',     [ShopController::class, 'deleteCategory'])->name('admin.shop.categories.delete');
+
+// ── Combos ────────────────────────────────────────────────────────────────────
+Route::get('/admin_shop_combos',                  [ShopController::class, 'combos'])->name('admin.shop.combos');
+Route::get('/admin_shop_combos/add',              [ShopController::class, 'addCombo'])->name('admin.shop.combos.add');
+Route::post('/admin_shop_combos/insert',          [ShopController::class, 'insertCombo'])->name('admin.shop.combos.insert');
+Route::get('/admin_shop_combos/edit/{id}',        [ShopController::class, 'editCombo'])->name('admin.shop.combos.edit');
+Route::put('/admin_shop_combos/update/{id}',      [ShopController::class, 'updateCombo'])->name('admin.shop.combos.update');
+Route::delete('/admin_shop_combos/delete/{id}',   [ShopController::class, 'deleteCombo'])->name('admin.shop.combos.delete');
 
 });

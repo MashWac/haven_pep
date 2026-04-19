@@ -112,51 +112,69 @@
 
 <script>
     $(document).ready(function() {
-    $('.add-to-cart-btn').on('click', function(e) {
-        e.preventDefault();
+        $('.add-to-cart-btn').on('click', function(e) {
+            e.preventDefault();
 
-        let button = $(this);
-        let id = button.data('id');
-        let type = button.data('type');
-        
-        // Optional: Change button state to show loading
-        let originalText = button.html();
-        button.prop('disabled', true).html('<span class="animate-spin">⏳</span> Adding...');
+            let button   = $(this);
+            let id       = button.data('id');
+            let type     = button.data('type'); // 'book' | 'course' | 'shop_item' | 'combo'
 
-        $.ajax({
-            url: "{{ url('/cart/add') }}", // The route we defined earlier
-            method: "POST",
-            data: {
-                _token: "{{ csrf_token() }}", // Required for Laravel security
-                id: id,
-                type: type
-            },
-            success: function(response) {
-                // 1. Reset button
-                button.prop('disabled', false).html(originalText);
+            // Visual loading state
+            let originalHtml = button.html();
+            button.prop('disabled', true).html('<span class="animate-spin inline-block">⏳</span>');
 
-                // 2. Optional: Show a toast/alert (Using a simple alert or custom UI)
-                alert(type.charAt(0).toUpperCase() + type.slice(1) + " added to cart successfully!");
+            $.ajax({
+                url: "{{ url('/cart/add') }}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    'Accept': 'application/json'
+                },
+                data: { _token: "{{ csrf_token() }}", id: id, type: type },
+                success: function(response) {
+                    button.prop('disabled', false).html(originalHtml);
 
-                // 3. Update the cart count in the header dynamically
-                updateCartCount();
-            },
-            error: function(xhr) {
-                button.prop('disabled', false).html(originalText);
-                console.error("Error adding to cart:", xhr.responseText);
-                alert("Something went wrong. Please try again.");
-            }
+                    // Update cart badge count
+                    if (response.cart_count !== undefined) {
+                        let badge = $('a[href="{{ url('/cart') }}"] span.absolute');
+                        if (badge.length) {
+                            badge.text(response.cart_count);
+                        } else {
+                            // Badge doesn't exist yet — create it
+                            $('a[href="{{ url('/cart') }}"]').append(
+                                '<span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">'
+                                + response.cart_count + '</span>'
+                            );
+                        }
+                    }
+
+                    // SweetAlert2 toast
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: response.message || 'Added to cart!',
+                        showConfirmButton: false,
+                        timer: 2500,
+                        timerProgressBar: true,
+                    });
+                },
+                error: function(xhr) {
+                    button.prop('disabled', false).html(originalHtml);
+                    let msg = 'Something went wrong. Please try again.';
+                    try { msg = JSON.parse(xhr.responseText).message || msg; } catch(ex) {}
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'error',
+                        title: msg,
+                        showConfirmButton: false,
+                        timer: 3000,
+                    });
+                }
+            });
         });
     });
-
-    // Function to update the number on the cart icon without refreshing
-    function updateCartCount() {
-        // You can either refresh the page or create a small endpoint 
-        // that returns the current cart count. 
-        // For now, a simple page reload is the most reliable:
-        window.location.reload(); 
-    }
-});
 </script>
 
 </html>

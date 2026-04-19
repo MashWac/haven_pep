@@ -23,8 +23,16 @@
 
                             <div class="flex flex-1 flex-col justify-between gap-4">
                                 <div>
-                                    <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider {{ $details['type'] == 'book' ? 'bg-tertiary/20 text-tertiary' : 'bg-secondary/20 text-secondary' }} mb-2">
-                                        {{ ucfirst($details['type']) }}
+                                    <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider
+                                        @if($details['type'] == 'book') bg-tertiary/20 text-tertiary
+                                        @elseif($details['type'] == 'shop_item') bg-primary/20 text-primary
+                                        @elseif($details['type'] == 'combo') bg-green-500/20 text-green-400
+                                        @else bg-secondary/20 text-secondary
+                                        @endif mb-2">
+                                        @if($details['type'] == 'shop_item') Shop Item
+                                        @elseif($details['type'] == 'combo') Combo Deal
+                                        @else {{ ucfirst($details['type']) }}
+                                        @endif
                                     </span>
                                     <h3 class="text-white text-lg font-bold leading-snug">{{ $details['name'] }}</h3>
                                     <p class="text-[#b5a1b4] text-sm mt-1">{{ $details['meta'] }}</p>
