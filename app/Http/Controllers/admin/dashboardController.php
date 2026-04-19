@@ -8,6 +8,7 @@ use App\Models\coursesModel;
 use App\Models\salesModel;
 use App\Models\userDetailsModel;
 use App\Models\VisitorIPModel;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -31,11 +32,13 @@ class dashboardController extends Controller
         $filter = $request->get('filter', 'daily'); // daily, weekly, monthly
         $data = [];
         $labels = [];
+        $driver = DB::getDriverName();
 
         if ($filter === 'monthly') {
             $periods = 12;
+            $format = $driver === 'pgsql' ? "to_char(created_at, 'YYYY-MM')" : 'DATE_FORMAT(created_at, "%Y-%m")';
             $results = VisitorIPModel::select(
-                DB::raw('DATE_FORMAT(created_at, "%Y-%m") as label'),
+                DB::raw("$format as label"),
                 DB::raw('COUNT(*) as count')
             )
                 ->where('created_at', '>=', Carbon::now()->subMonths($periods))
@@ -44,8 +47,9 @@ class dashboardController extends Controller
                 ->get();
         } elseif ($filter === 'weekly') {
             $periods = 12;
+            $format = $driver === 'pgsql' ? "to_char(created_at, 'IYYY-\"Week\" IW')" : 'DATE_FORMAT(created_at, "%x-Week %v")';
             $results = VisitorIPModel::select(
-                DB::raw('DATE_FORMAT(created_at, "%x-Week %v") as label'),
+                DB::raw("$format as label"),
                 DB::raw('COUNT(*) as count')
             )
                 ->where('created_at', '>=', Carbon::now()->subWeeks($periods))
@@ -55,8 +59,9 @@ class dashboardController extends Controller
         } else {
             // Default: daily (last 30 days)
             $periods = 30;
+            $format = $driver === 'pgsql' ? "to_char(created_at, 'YYYY-MM-DD')" : 'DATE(created_at)';
             $results = VisitorIPModel::select(
-                DB::raw('DATE(created_at) as label'),
+                DB::raw("$format as label"),
                 DB::raw('COUNT(*) as count')
             )
                 ->where('created_at', '>=', Carbon::now()->subDays($periods))
