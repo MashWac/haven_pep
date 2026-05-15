@@ -7,14 +7,10 @@ use App\Models\CombosModel;
 use App\Models\ShopCategoriesModel;
 use App\Models\ShopItemsModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ShopController extends Controller
 {
-    // =========================================================
-    // SHOP ITEMS
-    // =========================================================
-
+    //
     public function index()
     {
         $data['products'] = ShopItemsModel::join('shop_categories', 'shop_categories.id', '=', 'shop_items.category_id')
@@ -32,19 +28,19 @@ class ShopController extends Controller
     public function insert(Request $request)
     {
         $request->validate([
-            'name'                => 'required|string|max:255',
-            'description'         => 'nullable|string',
-            'price'               => 'required|numeric|min:0',
-            'category_id'         => 'required|exists:shop_categories,id',
-            'image'               => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'category_id' => 'required|exists:shop_categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'discount_percentage' => 'nullable|numeric|min:0|max:100',
         ]);
 
         $item = new ShopItemsModel();
-        $item->name                = $request->input('name');
-        $item->description         = $request->input('description');
-        $item->price               = $request->input('price');
-        $item->category_id         = $request->input('category_id');
+        $item->name = $request->input('name');
+        $item->description = $request->input('description');
+        $item->price = $request->input('price');
+        $item->category_id = $request->input('category_id');
         $item->discount_percentage = $request->input('discount_percentage', 0);
 
         if ($request->hasFile('image')) {
@@ -60,7 +56,7 @@ class ShopController extends Controller
 
     public function edit($id)
     {
-        $data['item']       = ShopItemsModel::findOrFail($id);
+        $data['item'] = ShopItemsModel::findOrFail($id);
         $data['categories'] = ShopCategoriesModel::all();
         return view('admin.shop.edit', compact('data'));
     }
@@ -68,19 +64,19 @@ class ShopController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name'                => 'required|string|max:255',
-            'description'         => 'nullable|string',
-            'price'               => 'required|numeric|min:0',
-            'category_id'         => 'required|exists:shop_categories,id',
-            'image'               => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'category_id' => 'required|exists:shop_categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'discount_percentage' => 'nullable|numeric|min:0|max:100',
         ]);
 
         $item = ShopItemsModel::findOrFail($id);
-        $item->name                = $request->input('name');
-        $item->description         = $request->input('description');
-        $item->price               = $request->input('price');
-        $item->category_id         = $request->input('category_id');
+        $item->name = $request->input('name');
+        $item->description = $request->input('description');
+        $item->price = $request->input('price');
+        $item->category_id = $request->input('category_id');
         $item->discount_percentage = $request->input('discount_percentage', 0);
 
         if ($request->hasFile('image')) {
@@ -119,12 +115,12 @@ class ShopController extends Controller
     public function insertCategory(Request $request)
     {
         $request->validate([
-            'name'        => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        $category              = new ShopCategoriesModel();
-        $category->name        = $request->input('name');
+        $category = new ShopCategoriesModel();
+        $category->name = $request->input('name');
         $category->description = $request->input('description');
         $category->save();
 
@@ -140,12 +136,12 @@ class ShopController extends Controller
     public function updateCategory(Request $request, $id)
     {
         $request->validate([
-            'name'        => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        $category              = ShopCategoriesModel::findOrFail($id);
-        $category->name        = $request->input('name');
+        $category = ShopCategoriesModel::findOrFail($id);
+        $category->name = $request->input('name');
         $category->description = $request->input('description');
         $category->save();
 
@@ -190,20 +186,20 @@ class ShopController extends Controller
     public function insertCombo(Request $request)
     {
         $request->validate([
-            'name'                => 'required|string|max:255',
-            'description'         => 'nullable|string',
-            'price'               => 'required|numeric|min:0',
-            'items_included'      => 'required|array|min:1',
-            'items_included.*'    => 'exists:shop_items,id',
-            'image'               => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'items_included' => 'required|array|min:1',
+            'items_included.*' => 'exists:shop_items,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'discount_percentage' => 'nullable|numeric|min:0|max:100',
         ]);
 
-        $combo                    = new CombosModel();
-        $combo->name              = $request->input('name');
-        $combo->description       = $request->input('description');
-        $combo->price             = $request->input('price');
-        $combo->items_included    = json_encode($request->input('items_included'));
+        $combo = new CombosModel();
+        $combo->name = $request->input('name');
+        $combo->description = $request->input('description');
+        $combo->price = $request->input('price');
+        $combo->items_included = json_encode($request->input('items_included'));
         $combo->discount_percentage = $request->input('discount_percentage', 0);
 
         if ($request->hasFile('image')) {
@@ -231,20 +227,20 @@ class ShopController extends Controller
     public function updateCombo(Request $request, $id)
     {
         $request->validate([
-            'name'                => 'required|string|max:255',
-            'description'         => 'nullable|string',
-            'price'               => 'required|numeric|min:0',
-            'items_included'      => 'required|array|min:1',
-            'items_included.*'    => 'exists:shop_items,id',
-            'image'               => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'items_included' => 'required|array|min:1',
+            'items_included.*' => 'exists:shop_items,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'discount_percentage' => 'nullable|numeric|min:0|max:100',
         ]);
 
-        $combo                    = CombosModel::findOrFail($id);
-        $combo->name              = $request->input('name');
-        $combo->description       = $request->input('description');
-        $combo->price             = $request->input('price');
-        $combo->items_included    = json_encode($request->input('items_included'));
+        $combo = CombosModel::findOrFail($id);
+        $combo->name = $request->input('name');
+        $combo->description = $request->input('description');
+        $combo->price = $request->input('price');
+        $combo->items_included = json_encode($request->input('items_included'));
         $combo->discount_percentage = $request->input('discount_percentage', 0);
 
         if ($request->hasFile('image')) {
