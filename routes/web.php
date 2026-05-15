@@ -6,7 +6,7 @@ use App\Http\Controllers\admin\courseController;
 use App\Http\Controllers\admin\dashboardController;
 use App\Http\Controllers\admin\myProfileController;
 use App\Http\Controllers\admin\salesController;
-use App\Http\Controllers\Admin\ShopController;
+use App\Http\Controllers\Admin\AdminShopController;
 use App\Http\Controllers\admin\SystemSettingsController;
 use App\Http\Controllers\admin\usersController;
 use App\Http\Controllers\auth\AuthenticationController;
@@ -14,11 +14,10 @@ use App\Http\Controllers\client\booksController;
 use App\Http\Controllers\client\cartController;
 use App\Http\Controllers\client\coursesController;
 use App\Http\Controllers\client\instructorController;
-use App\Http\Controllers\client\ShopController as ClientShopController;
+use App\Http\Controllers\client\ShopController;
 use App\Http\Controllers\client\userController;
 use Bryceandy\Laravel_Pesapal\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
-use Termwind\Components\Raw;
 
 
 // Route::get('/', function () {
@@ -35,7 +34,7 @@ Route::middleware(['personalization'])->group(function () {
     Route::get('/courses', [coursesController::class, 'index']);
     Route::get('/course_details/{id}', [coursesController::class, 'courseDetails']);
 
-    Route::get('/shop', [ClientShopController::class, 'index'])->name('client.shop');
+    Route::get('/shop', [ShopController::class, 'index'])->name('client.shop');
 
 
     Route::get('/login', [AuthenticationController::class, 'login']);
@@ -137,27 +136,27 @@ Route::middleware(['admin_only'])->group(function () {
     Route::put('admin_settings/update', [SystemSettingsController::class, 'update']);
 
     // ── Shop Items ────────────────────────────────────────────────────────────────
-    Route::get('/admin_shop', [ShopController::class, 'index']);
-    Route::get('/admin_shop/add', [ShopController::class, 'add']);
-    Route::post('/admin_shop/insert', [ShopController::class, 'insert']);
-    Route::get('/admin_shop/edit/{id}', [ShopController::class, 'edit']);
-    Route::put('/admin_shop/update/{id}', [ShopController::class, 'update']);
-    Route::delete('/admin_shop/delete/{id}', [ShopController::class, 'delete']);
+    Route::get('/admin_shop', [AdminShopController::class, 'index']);
+    Route::get('/admin_shop/add', [AdminShopController::class, 'add']);
+    Route::post('/admin_shop/insert', [AdminShopController::class, 'insert']);
+    Route::get('/admin_shop/edit/{id}', [AdminShopController::class, 'edit']);
+    Route::put('/admin_shop/update/{id}', [AdminShopController::class, 'update']);
+    Route::delete('/admin_shop/delete/{id}', [AdminShopController::class, 'delete']);
 
     // ── Shop Categories ───────────────────────────────────────────────────────────
-    Route::get('/admin_shop_categories', [ShopController::class, 'shopCategories'])->name('admin.shop.categories');
-    Route::get('/admin_shop_categories/add', [ShopController::class, 'addCategory'])->name('admin.shop.categories.add');
-    Route::post('/admin_shop_categories/insert', [ShopController::class, 'insertCategory'])->name('admin.shop.categories.insert');
-    Route::get('/admin_shop_categories/edit/{id}', [ShopController::class, 'editCategory'])->name('admin.shop.categories.edit');
-    Route::put('/admin_shop_categories/update/{id}', [ShopController::class, 'updateCategory'])->name('admin.shop.categories.update');
-    Route::delete('/admin_shop_categories/delete/{id}', [ShopController::class, 'deleteCategory'])->name('admin.shop.categories.delete');
+    Route::get('/admin_shop_categories', [AdminShopController::class, 'shopCategories']);
+    Route::get('/admin_shop_categories/add', [AdminShopController::class, 'addCategory']);
+    Route::post('/admin_shop_categories/insert', [AdminShopController::class, 'insertCategory']);
+    Route::get('/admin_shop_categories/edit/{id}', [AdminShopController::class, 'editCategory']);
+    Route::put('/admin_shop_categories/update/{id}', [AdminShopController::class, 'updateCategory']);
+    Route::delete('/admin_shop_categories/delete/{id}', [AdminShopController::class, 'deleteCategory']);
 
     // ── Combos ────────────────────────────────────────────────────────────────────
-    Route::get('/admin_shop_combos', [ShopController::class, 'combos'])->name('admin.shop.combos');
-    Route::get('/admin_shop_combos/add', [ShopController::class, 'addCombo'])->name('admin.shop.combos.add');
-    Route::post('/admin_shop_combos/insert', [ShopController::class, 'insertCombo'])->name('admin.shop.combos.insert');
-    Route::get('/admin_shop_combos/edit/{id}', [ShopController::class, 'editCombo'])->name('admin.shop.combos.edit');
-    Route::put('/admin_shop_combos/update/{id}', [ShopController::class, 'updateCombo'])->name('admin.shop.combos.update');
-    Route::delete('/admin_shop_combos/delete/{id}', [ShopController::class, 'deleteCombo'])->name('admin.shop.combos.delete');
+    Route::get('/admin_shop_combos', [AdminShopController::class, 'combos']);
+    Route::get('/admin_shop_combos/add', [AdminShopController::class, 'addCombo']);
+    Route::post('/admin_shop_combos/insert', [AdminShopController::class, 'insertCombo']);
+    Route::get('/admin_shop_combos/edit/{id}', [AdminShopController::class, 'editCombo']);
+    Route::put('/admin_shop_combos/update/{id}', [AdminShopController::class, 'updateCombo']);
+    Route::delete('/admin_shop_combos/delete/{id}', [AdminShopController::class, 'deleteCombo']);
 
 });

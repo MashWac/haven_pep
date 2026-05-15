@@ -8,9 +8,10 @@ use App\Models\ShopCategoriesModel;
 use App\Models\ShopItemsModel;
 use Illuminate\Http\Request;
 
-class ShopController extends Controller
+class AdminShopController extends Controller
 {
     //
+
     public function index()
     {
         $data['products'] = ShopItemsModel::join('shop_categories', 'shop_categories.id', '=', 'shop_items.category_id')
