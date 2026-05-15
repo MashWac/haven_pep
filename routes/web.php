@@ -137,12 +137,12 @@ Route::middleware(['admin_only'])->group(function () {
     Route::put('admin_settings/update', [SystemSettingsController::class, 'update']);
 
     // ── Shop Items ────────────────────────────────────────────────────────────────
-    Route::get('/admin_shop', [ShopController::class, 'index'])->name('admin.shop.index');
-    Route::get('/admin_shop/add', [ShopController::class, 'add'])->name('admin.shop.add');
-    Route::post('/admin_shop/insert', [ShopController::class, 'insert'])->name('admin.shop.insert');
-    Route::get('/admin_shop/edit/{id}', [ShopController::class, 'edit'])->name('admin.shop.edit');
-    Route::put('/admin_shop/update/{id}', [ShopController::class, 'update'])->name('admin.shop.update');
-    Route::delete('/admin_shop/delete/{id}', [ShopController::class, 'delete'])->name('admin.shop.delete');
+    Route::get('/admin_shop', [ShopController::class, 'index']);
+    Route::get('/admin_shop/add', [ShopController::class, 'add']);
+    Route::post('/admin_shop/insert', [ShopController::class, 'insert']);
+    Route::get('/admin_shop/edit/{id}', [ShopController::class, 'edit']);
+    Route::put('/admin_shop/update/{id}', [ShopController::class, 'update']);
+    Route::delete('/admin_shop/delete/{id}', [ShopController::class, 'delete']);
 
     // ── Shop Categories ───────────────────────────────────────────────────────────
     Route::get('/admin_shop_categories', [ShopController::class, 'shopCategories'])->name('admin.shop.categories');
