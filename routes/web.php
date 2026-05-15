@@ -6,7 +6,7 @@ use App\Http\Controllers\admin\courseController;
 use App\Http\Controllers\admin\dashboardController;
 use App\Http\Controllers\admin\myProfileController;
 use App\Http\Controllers\admin\salesController;
-use App\Http\Controllers\Admin\AdminShopController;
+use App\Http\Controllers\admin\AdminShopController;
 use App\Http\Controllers\admin\SystemSettingsController;
 use App\Http\Controllers\admin\usersController;
 use App\Http\Controllers\auth\AuthenticationController;
