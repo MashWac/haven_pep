@@ -133,11 +133,15 @@
                         <h2 class="text-lg font-bold mb-4 dark:text-white flex items-center gap-2">
                             <span class="material-symbols-outlined text-[#40B5AD]">image</span> Cover Image
                         </h2>
-                        <div class="flex flex-col items-center">
+                        <div class="flex flex-col items-center w-full">
                             @if($data['course']->cover_image)
-                            <img src="{{ $data['course']->cover_image }}" class="w-full h-40 object-cover rounded-lg mb-4 border border-[#e5e2dc]">
+                            <img id="current-cover-image" src="{{ $data['course']->cover_image }}" class="w-full h-40 object-cover rounded-lg mb-4 border border-[#e5e2dc]">
                             @endif
-                            <input type="file" name="cover_image" class="text-sm dark:text-white">
+                            <div id="cover-image-preview-wrapper" class="hidden w-full mb-4">
+                                <img id="cover-image-preview" src="" alt="Selected cover preview" class="w-full h-40 object-cover rounded-lg border border-[#e5e2dc]">
+                                <p class="text-xs text-[#877b64] text-center mt-1">Selected image preview</p>
+                            </div>
+                            <input id="cover-image-input" type="file" name="cover_image" class="text-sm dark:text-white" accept="image/*">
                         </div>
                     </section>
 
@@ -221,6 +225,30 @@
 
         lessonSelect.addEventListener('change', (e) => generateLessonFields(e.target.value));
         generateLessonFields(lessonSelect.value);
+
+        const coverImageInput = document.getElementById('cover-image-input');
+        if (coverImageInput) {
+            coverImageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) {
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    const preview = document.getElementById('cover-image-preview');
+                    const wrapper = document.getElementById('cover-image-preview-wrapper');
+                    const current = document.getElementById('current-cover-image');
+                    if (preview && wrapper) {
+                        preview.src = ev.target.result;
+                        wrapper.classList.remove('hidden');
+                    }
+                    if (current) {
+                        current.classList.add('hidden');
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
     });
 </script>
 @endsection
