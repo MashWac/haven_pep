@@ -16,7 +16,7 @@ class instructorController extends Controller
     {
         $instructor = InstructorModel::first();
         $achievements = AchievementsModel::where('instructor_id', $instructor->id)->get();
-        $courses = coursesModel::all();
+        $courses = coursesModel::join('course_categories', 'courses.category_id', '=', 'course_categories.id')->select('course_categories.category_name','courses.*')->get();
         $bubbles = AboutMeBubbleModel::orderBy('rank_position', 'asc')->get();
         $books = BooksModel::join('authors', 'books.author', '=', 'authors.id')->join('book_categories', 'books.category_id', '=', 'book_categories.id')->select('books.*', 'authors.full_name as author')->get();
         return view('client.instructor', compact('instructor', 'achievements', 'courses', 'books', 'bubbles'));
